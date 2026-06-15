@@ -1,0 +1,114 @@
+// ── Certificates Section ──────────────────────────────────────────────────────
+
+.section {
+  border-radius: 12px;
+  padding: 24px 32px 48px;
+  transition: background 0.2s;
+}
+
+.certsSection {
+  background: var(--bg-page);
+  border-color: var(--border-color);
+}
+
+.h1 {
+  font-family: "Geologica", sans-serif;
+  font-size: 24px;
+  line-height: 1.33;
+  letter-spacing: -0.03em;
+  color: var(--color-black);
+  margin: 0;
+}
+
+.certsGrid {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.certCard {
+  display: flex;
+  flex-direction: column;
+}
+
+.certCardWide {
+  grid-column: span 2;
+}
+
+.certCardInner {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  cursor: pointer;
+  gap: 10px;
+}
+
+.certPreview {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--bg-card, #f2f3f5);
+  border: 1px solid var(--border-color);
+  aspect-ratio: 3 / 4;
+  width: 100%;
+}
+
+:global([data-theme="dark"]) .certPreview {
+  background: #1c1d22;
+}
+
+.certCardWide .certPreview {
+  aspect-ratio: 16 / 9;
+}
+
+.certPreviewImg {
+  object-fit: cover;
+}
+
+.certPreviewImgLandscape {
+  object-fit: cover;
+}
+
+.certPreviewPlaceholder {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.01) 100%);
+}
+
+:global([data-theme="dark"]) .certPreviewPlaceholder {
+  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+}
+
+.certTitle {
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--color-grey);
+  padding: 0 2px;
+}
+
+// ── Responsive ────────────────────────────────────────────────────────────────
+
+@media (max-width: 1100px) {
+  .certsGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .certCardWide { grid-column: span 1; }
+}
+
+@media (max-width: 860px) {
+  .certsGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .certCardWide { grid-column: span 2; }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 20px 16px 32px;
+    border-radius: 10px;
+  }
+
+  .h1 { font-size: 20px; }
+}
+
+@media (max-width: 480px) {
+  .section { padding: 16px 12px 24px; }
+  .certsGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+}

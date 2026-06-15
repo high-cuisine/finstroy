@@ -1,0 +1,69 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: var(--app-outer-bg);
+  transition: background 0.2s, color 0.2s;
+}
+
+.themeToggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--bg-page);
+  color: var(--color-grey);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+
+  &:hover {
+    background: var(--bg-ctrl);
+  }
+}
+
+.card {
+  width: 100%;
+  max-width: 520px;
+  padding: 40px 32px;
+  border-radius: 20px;
+  background: var(--bg-page);
+  border: 1px solid var(--border-color);
+  text-align: center;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.06);
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.logo {
+  margin: 0 auto 28px;
+}
+
+.title {
+  margin: 0 0 12px;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-black);
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-grey);
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 32px 20px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+}

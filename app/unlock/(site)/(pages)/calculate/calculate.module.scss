@@ -1,0 +1,72 @@
+.pageShell {
+  width: 100%;
+  background: var(--color-grey-bg);
+  color: var(--color-black);
+  min-height: calc(100dvh - 240px);
+  display: flex;
+  flex-direction: column;
+  transition: background 0.2s, color 0.2s;
+
+  --calc-template-bg: #dcdce0;
+  --calc-piece-bg: #f0f0f5;
+  --calc-piece-text: #111114;
+  --calc-piece-subtext: #4d4d5c;
+}
+
+:global([data-theme="dark"]) .pageShell {
+  --calc-template-bg: #2c2c34;
+  --calc-piece-bg: #242429;
+  --calc-piece-text: #ffffff;
+  --calc-piece-subtext: #9696a3;
+}
+
+.page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+  padding: 8px 0 32px;
+  min-height: 0;
+}
+
+.title {
+  margin: 0;
+  padding: 0 32px 24px;
+  font-family: var(--font-geologica), sans-serif;
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--color-black);
+  flex-shrink: 0;
+}
+
+.layout {
+  flex: 1;
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+  min-height: 640px;
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  .pageShell {
+    min-height: auto;
+  }
+
+  .page {
+    padding: 8px 0 24px;
+  }
+
+  .title {
+    font-size: 22px;
+    padding: 0 16px 16px;
+  }
+
+  .layout {
+    flex-direction: column;
+    gap: 8px;
+    min-height: auto;
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "name": "new",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --webpack",
+    "build": "next build --webpack",
+    "postbuild": "cp -r public .next/standalone/public && mkdir -p .next/standalone/.next && cp -r .next/static .next/standalone/.next/static",
+    "start": "node .next/standalone/server.js",
+    "deploy": "NODE_OPTIONS='--max-old-space-size=512' npm run build && (pm2 delete finstroi-web 2>/dev/null || true) && cd .next/standalone && env HOSTNAME=0.0.0.0 PORT=3000 NODE_ENV=production pm2 start server.js --name finstroi-web && pm2 save",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@amcharts/amcharts4-geodata": "^4.1.31",
+    "next": "16.1.6",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-simple-maps": "^3.0.0",
+    "sass": "^1.98.0",
+    "undici": "^7.25.0",
+    "zustand": "^5.0.12"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/react-simple-maps": "^3.0.6",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.6",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "world-atlas": "^2.0.2"
+  },
+  "overrides": {
+    "react-simple-maps": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+.DS_Store
+.git
+.gitignore
+.cursor
+
+# dependencies / build outputs
+node_modules
+.next
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env
+.env.*

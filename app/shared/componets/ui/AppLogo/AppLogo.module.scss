@@ -1,0 +1,22 @@
+.root {
+  display: inline-block;
+  line-height: 0;
+}
+
+.logo {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.root .logoDark {
+  display: none;
+}
+
+:global([data-theme="dark"]) .root .logoLight {
+  display: none;
+}
+
+:global([data-theme="dark"]) .root .logoDark {
+  display: block;
+}

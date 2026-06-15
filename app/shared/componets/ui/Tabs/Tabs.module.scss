@@ -1,0 +1,89 @@
+// ── Tabs ──────────────────────────────────────────────────────────────────────
+
+.tabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tab {
+  border: none;
+  background: transparent;
+  color: var(--color-black);
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 1.43;
+  cursor: pointer;
+  transition: background 0.16s, color 0.16s, transform 0.16s;
+}
+
+// ── Pill variant ──────────────────────────────────────────────────────────────
+
+.pill .tab {
+  min-height: 40px;
+  padding: 10px 24px;
+  border-radius: 999px;
+}
+
+.pill .tab:hover {
+  transform: translateY(-1px);
+}
+
+.pill .tabMuted {
+  background: var(--color-grey-bg, #f0f0f5);
+}
+
+.pill .tabMuted:hover {
+  background: var(--border-color, #e0e0e8);
+}
+
+.pill .tabActive {
+  background: #4d4d5c;
+  color: #fff;
+}
+
+.pill .tabActive:hover {
+  background: #4d4d5c;
+  color: #fff;
+}
+
+// ── Underline variant ─────────────────────────────────────────────────────────
+
+.underline {
+  gap: 0;
+}
+
+.underline .tab {
+  padding: 10px 20px;
+  border-radius: 0;
+  border-bottom: 2px solid transparent;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-grey);
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.underline .tab:hover {
+  color: var(--color-black);
+}
+
+.underline .tabActive {
+  color: var(--color-black);
+  border-bottom-color: var(--color-green, #006f3d);
+}
+
+// ── Responsive ────────────────────────────────────────────────────────────────
+
+@media (max-width: 768px) {
+  .pill .tab {
+    min-height: 36px;
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  .underline .tab {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+}

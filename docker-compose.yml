@@ -1,0 +1,23 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        WP_PAGES_UPSTREAM: ${WP_PAGES_UPSTREAM:-https://wp.finstroi.com}
+        CUBIC_CALCULATOR_UPSTREAM: ${CUBIC_CALCULATOR_UPSTREAM:-https://wp.finstroi.com/wp-json/cubic-calculator/v1}
+    container_name: new
+    ports:
+      - "3338:3000"
+    environment:
+      NODE_ENV: production
+      WP_PAGES_UPSTREAM: ${WP_PAGES_UPSTREAM:-https://wp.finstroi.com}
+      CUBIC_CALCULATOR_UPSTREAM: ${CUBIC_CALCULATOR_UPSTREAM:-https://wp.finstroi.com/wp-json/cubic-calculator/v1}
+      NEXT_PUBLIC_YANDEX_MAPS_API_KEY: ${NEXT_PUBLIC_YANDEX_MAPS_API_KEY:-}
+      NEXT_PUBLIC_WC_PRODUCT_PAGE_ID: ${NEXT_PUBLIC_WC_PRODUCT_PAGE_ID:-}
+      NEXT_PUBLIC_WP_PAGES_UPSTREAM: ${NEXT_PUBLIC_WP_PAGES_UPSTREAM:-https://wp.finstroi.com}
+      NEXT_PUBLIC_CUBIC_CALCULATOR_BASE: ${NEXT_PUBLIC_CUBIC_CALCULATOR_BASE:-https://wp.finstroi.com/wp-json/cubic-calculator/v1}
+      UNLOCK_GATE_USERNAME: ${UNLOCK_GATE_USERNAME:-}
+      UNLOCK_GATE_PASSWORD: ${UNLOCK_GATE_PASSWORD:-}
+      UNLOCK_GATE_SECRET: ${UNLOCK_GATE_SECRET:-}
+    restart: unless-stopped

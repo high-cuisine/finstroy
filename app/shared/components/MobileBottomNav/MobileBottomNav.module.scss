@@ -1,0 +1,97 @@
+.nav {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .nav {
+    --mobile-nav-bg: var(--bg-page, #ffffff);
+    --mobile-nav-border: var(--border-color, #dcdce0);
+    --mobile-nav-item: var(--color-grey, #4d4d5c);
+    --mobile-nav-item-active-bg: var(--bg-surface, #f0f0f5);
+    --mobile-nav-item-active: #111114;
+
+    display: block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 950;
+    padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px));
+    background: var(--mobile-nav-bg);
+    border-top: 1px solid var(--mobile-nav-border);
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  :global([data-theme="dark"]) .nav {
+    --mobile-nav-bg: #111114;
+    --mobile-nav-border: rgba(255, 255, 255, 0.06);
+    --mobile-nav-item: #9696a3;
+    --mobile-nav-item-active-bg: rgba(255, 255, 255, 0.08);
+    --mobile-nav-item-active: #ffffff;
+  }
+
+  .inner {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 4px;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .item {
+    appearance: none;
+    border: none;
+    background: transparent;
+    color: var(--mobile-nav-item);
+    min-height: 64px;
+    padding: 8px 6px 6px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.16s, color 0.16s;
+  }
+
+  .itemActive {
+    background: var(--mobile-nav-item-active-bg);
+    color: var(--mobile-nav-item-active);
+  }
+
+  .iconWrap {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .label {
+    font-family: var(--font-inter), sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .badge {
+    position: absolute;
+    top: -6px;
+    right: -10px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    border-radius: 999px;
+    background: var(--color-green, #006f3d);
+    color: #ffffff;
+    font-family: var(--font-inter), sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 18px;
+    text-align: center;
+  }
+}

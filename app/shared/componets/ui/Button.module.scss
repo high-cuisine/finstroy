@@ -1,0 +1,49 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: opacity 0.15s, background 0.2s;
+
+  &:hover {
+    opacity: 0.85;
+  }
+}
+
+.green {
+  background: #006f3d;
+  color: #ffffff;
+}
+
+.grey {
+  background: var(--bg-ctrl);
+  color: var(--color-black);
+}
+
+.black {
+  background: var(--bg-surface);
+  color: var(--color-black);
+}
+
+/* In dark mode, explicitly keep contrast */
+:global([data-theme="dark"]) .black {
+  background: #36363d;
+  color: #ffffff;
+}
+
+:global([data-theme="dark"]) .grey {
+  background: #2c2c34;
+  color: #ffffff;
+}
+
+.L {
+  padding: 12px 20px;
+}
+
+.M {
+  padding: 12px 16px;
+}

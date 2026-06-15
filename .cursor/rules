@@ -1,0 +1,190 @@
+# Cursor Rules — Финстрой Frontend (Next.js)
+
+## Стек технологий (точные версии)
+
+| Пакет | Версия |
+|---|---|
+| next | 16.1.6 |
+| react | 19.2.3 |
+| react-dom | 19.2.3 |
+| typescript | ^5 |
+| sass | ^1.98.0 |
+| tailwindcss | ^4 |
+| @tailwindcss/postcss | ^4 |
+| node (Docker) | 20-alpine |
+
+> Tailwind v4 подключён **только через PostCSS** (`postcss.config.mjs`). Отдельного `tailwind.config.js` нет — конфигурация через `@theme inline {}` в `globals.css`.
+
+---
+
+## Структура проекта
+
+```
+new/
+├── app/
+│   ├── page.tsx                  # Корень: redirect("/pages")
+│   ├── layout.tsx                # RootLayout: шрифты, ThemeProvider, metadata
+│   ├── globals.css               # CSS-переменные тем, @theme inline, base-стили
+│   ├── (pages)/                      # Route group — НЕ попадает в URL
+│   │   ├── (main)/               # Route group — главная (URL: /)
+│   │   │   ├── page.tsx
+│   │   │   ├── main.module.scss
+│   │   │   └── components/       # Секции только для этой страницы
+│   │   ├── products/             # URL: /products
+│   │   ├── news/                 # URL: /news
+│   │   │   └── [id]/             # URL: /news/[id]
+│   │   ├── account/              # URL: /account
+│   │   └── contacts/             # URL: /contacts
+│   ├── shared/
+│   │   ├── componets/            # Опечатка "componets" — так в проекте, не менять
+│   │   │   ├── layout/
+│   │   │   │   ├── Header/       # Header.tsx + Header.module.scss
+│   │   │   │   └── Footer/       # Footer.tsx + Footer.module.scss
+│   │   │   ├── ui/
+│   │   │   │   └── Button/       # Button.tsx + Button.module.scss
+│   │   │   └── widgets/          # Пустая папка (зарезервирована)
+│   │   ├── context/
+│   │   │   └── ThemeContext.tsx  # useTheme() + ThemeProvider
+│   │   └── lib/
+│   │       ├── helpers/          # Пустая папка
+│   │       └── hooks/            # Пустая папка
+│   └── features/                 # Пустая папка (feature-слайсы)
+├── public/
+│   ├── icons/                    # SVG-иконки (logo, cart, search, theme-swap…)
+│   └── images/                   # PNG-изображения (категории, новости, hero)
+├── .cursor/rules                 # Этот файл
+├── docs/ai/                      # AI-документация
+├── Dockerfile                    # Multi-stage build (deps → builder → runner)
+├── docker-compose.yml            # port 3338:3000, NODE_ENV=production
+└── package.json
+```
+
+---
+
+## Архитектурные паттерны
+
+### 1. Роутинг
+- Используется **Next.js App Router** (папки = маршруты)
+- Корень `app/page.tsx` делает `redirect("/pages")` — фактическая главная на `/pages`
+- Route group `(main)` не создаёт сегмент URL — страница доступна по `/pages`
+- Динамический маршрут: `news/[id]/page.tsx` → `/pages/news/123`
+
+### 2. Темизация
+- `ThemeProvider` в `layout.tsx` оборачивает всё приложение
+- Переключение: `document.documentElement.setAttribute("data-theme", "dark")`
+- CSS-переменные в `globals.css`: `:root { ... }` + `[data-theme="dark"] { ... }`
+- Сохранение в `localStorage` с фоллбэком на `prefers-color-scheme`
+- Хук `useTheme()` для чтения/переключения в любом Client Component
+
+### 3. Стилизация
+- **SCSS Modules** для всех компонентов (`.module.scss` рядом с `.tsx`)
+- **Tailwind v4** для утилит в разметке (используется минимально — в основном `flex flex-col w-full`)
+- CSS Custom Properties вместо Tailwind для тем — переменные вида `var(--bg-page)`, `var(--color-black)` и т. д.
+- Адаптивность через `@media` в SCSS-модулях (не через Tailwind breakpoints)
+
+### 4. Серверные vs. клиентские компоненты
+- По умолчанию компонент **серверный** (нет директивы)
+- `"use client"` ставится только при использовании: `useState`, `useEffect`, `usePathname`, `useTheme`, обработчиков событий
+- Страницы с интерактивностью (`account/page.tsx`, `Header/Header.tsx`) — клиентские
+- Секции главной страницы — серверные
+
+### 5. Структура страницы
+Каждая страница следует шаблону:
+```tsx
+export default function SomePage() {
+  return (
+    <div className={styles.page}>
+      <Header />
+      <main className={styles.main}>
+        {/* контент */}
+      </main>
+      <Footer />
+    </div>
+  );
+}
+```
+
+### 6. Данные
+- Статические данные хранятся в `data.ts` рядом со страницей (пример: `news/data.ts`)
+- TypeScript-интерфейсы объявляются в том же файле, что и данные
+- Нет бэкенда / API-роутов — только статические данные
+
+---
+
+## Соглашения по именованию
+
+| Что | Формат | Пример |
+|---|---|---|
+| Компоненты | PascalCase | `HeroSection.tsx` |
+| Стили | `ComponentName.module.scss` | `HeroSection.module.scss` |
+| CSS-классы | camelCase | `.cartItemTotal`, `.navLinkActive` |
+| Локальные типы | PascalCase | `interface CartItem`, `type Tab` |
+| Константы-массивы | camelCase | `const navLinks = [...]` |
+| Хуки | `use` + PascalCase | `useTheme()` |
+| Папки компонентов | PascalCase | `Header/`, `HeroSection/` |
+| Папки страниц | lowercase или `(group)` | `products/`, `(main)/` |
+
+> **Важно:** папка shared называется `componets` (опечатка без `n`). Использовать именно это написание во всех импортах.
+
+---
+
+## Что НЕ делать
+
+- ❌ Не создавать `tailwind.config.js` — Tailwind v4 конфигурируется через `@theme inline {}` в `globals.css`
+- ❌ Не использовать Tailwind `dark:` variant — тема переключается через `[data-theme="dark"]`, не через class-strategy
+- ❌ Не хардкодить цвета в SCSS напрямую — использовать CSS-переменные (`var(--bg-page)`, `var(--color-black)` и т. д.)
+- ❌ Не переименовывать папку `componets` в `components` — это сломает все импорты
+- ❌ Не добавлять `"use client"` без необходимости — клиентские компоненты хуже с SSR
+- ❌ Не создавать глобальные SCSS-файлы — стили только в `.module.scss` рядом с компонентом
+- ❌ Не писать inline-стили (`style={{}}`) — только CSS-модули
+- ❌ Не использовать `<img>` напрямую — только `next/image` `<Image>`
+- ❌ Не использовать `<a>` для внутренней навигации — только `next/link` `<Link>`
+
+---
+
+---
+
+## Запуск проекта
+
+```bash
+# Development
+cd new
+npm install
+npm run dev          # http://localhost:3000
+
+# Production (Docker)
+docker compose up -d  # http://localhost:3338
+
+# Lint
+npm run lint
+
+# Build
+npm run build && npm run start
+```
+
+---
+
+## CSS-переменные (краткий справочник)
+
+```css
+/* Фон */
+--bg-page        /* Фон страницы */
+--bg-surface     /* Карточки, панели */
+--bg-ctrl        /* Кнопки, инпуты, мелкие контролы */
+--border-color   /* Бордеры */
+
+/* Текст */
+--color-black    /* Основной текст (инвертируется в тёмной теме) */
+--color-grey     /* Вторичный текст */
+--color-grey-light
+
+/* Акценты */
+--color-green    /* #006f3d — основной акцент */
+--color-green-light
+
+/* Каталог/продукты */
+--cat-bg, --cat-surface, --cat-text, --cat-border…
+
+/* Новости */
+--news-date
+```

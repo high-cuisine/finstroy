@@ -1,0 +1,45 @@
+// ── Contacts Info Card ────────────────────────────────────────────────────────
+
+.contactsCard {
+  background: var(--bg-surface);
+  border-radius: 12px;
+  padding: 20px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: background 0.2s;
+}
+
+.contactsTitle {
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-black);
+  transition: color 0.2s;
+}
+
+.contactItem {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.contactLabel {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  color: var(--color-grey);
+  transition: color 0.2s;
+}
+
+.contactValue {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-black);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.contactValue:hover {
+  color: #006f3d;
+}

@@ -1,0 +1,204 @@
+// ── Product Calculator ────────────────────────────────────────────────────────
+
+.calcColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.fieldLabel {
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--cat-text);
+  margin-bottom: 6px;
+  font-family: var(--font-inter), sans-serif;
+}
+
+.fieldLabelGrey {
+  color: var(--cat-text-sub);
+}
+
+.selectWrap {
+  position: relative;
+}
+
+.select {
+  width: 100%;
+  padding: 12px 40px 12px 16px;
+  background: var(--cat-input-bg);
+  border: 1px solid var(--cat-border);
+  border-radius: 12px;
+  font-size: 14px;
+  font-family: var(--font-inter), sans-serif;
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s, background 0.2s, color 0.2s;
+}
+
+.select:focus {
+  border-color: #006f3d;
+}
+
+.selectPlaceholder {
+  color: var(--cat-placeholder);
+}
+
+.selectFilled {
+  color: var(--cat-text);
+}
+
+.selectArrow {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+  color: var(--cat-placeholder);
+}
+
+.inputsRow {
+  display: flex;
+  gap: 12px;
+}
+
+.inputGroup {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.input {
+  padding: 12px 16px;
+  background: var(--cat-input-bg);
+  border: 1px solid var(--cat-border);
+  border-radius: 12px;
+  color: var(--cat-placeholder);
+  font-size: 14px;
+  font-family: var(--font-inter), sans-serif;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.15s, background 0.2s, color 0.2s;
+}
+
+.input:focus {
+  border-color: #006f3d;
+  color: var(--cat-text);
+}
+
+.inputEditable {
+  color: var(--cat-text);
+}
+
+// ── Checkbox ──────────────────────────────────────────────────────────────────
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkboxInput {
+  display: none;
+}
+
+.checkboxBox {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  background: #006f3d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.checkboxBoxOff {
+  background: transparent;
+  border: 1px solid var(--cat-border);
+}
+
+.checkboxLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--cat-text);
+  font-family: var(--font-inter), sans-serif;
+}
+
+// ── Info + Total ──────────────────────────────────────────────────────────────
+
+.infoRow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.infoText {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--cat-text);
+  font-family: var(--font-inter), sans-serif;
+}
+
+.totalRow {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.totalText {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--cat-text);
+  font-family: var(--font-inter), sans-serif;
+  white-space: nowrap;
+}
+
+.orderActions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.orderHint {
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--color-grey, #8d96a9);
+  max-width: 320px;
+}
+
+.orderError {
+  font-size: 13px;
+  line-height: 1.35;
+  color: #b91c1c;
+  max-width: 360px;
+}
+
+// ── Responsive ────────────────────────────────────────────────────────────────
+
+@media (max-width: 480px) {
+  .inputsRow {
+    flex-direction: column;
+  }
+
+  .totalRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .totalRow .orderActions button {
+    width: 100%;
+    justify-content: center;
+  }
+}

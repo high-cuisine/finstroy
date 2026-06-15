@@ -1,0 +1,20 @@
+.dialogWide {
+  max-width: 480px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+
+  @media (max-width: 520px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.hint {
+  margin: 0 0 4px;
+  font-size: 13px;
+  color: var(--color-grey);
+  line-height: 1.45;
+}

@@ -1,0 +1,12 @@
+.appFrame {
+  width: 100%;
+  max-width: 1920px;
+  min-height: 100vh;
+  margin: 0 auto;
+}
+
+@media (max-width: 1023px) {
+  .appFrame {
+    padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+  }
+}

@@ -1,0 +1,892 @@
+.page {
+  --about-page-bg: #f0f0f5;
+  --about-panel: #ffffff;
+  --about-muted: #4d4d5c;
+  --about-accent: #006f3d;
+  --about-on-accent: #ffffff;
+  --about-nav-hover: #f0f0f5;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--about-page-bg, var(--bg-page));
+  transition: background 0.2s;
+}
+
+:global([data-theme="dark"]) .page {
+  --about-page-bg: #2b2b31;
+  --about-panel: #111114;
+  --about-muted: #9696a3;
+  --about-accent: #006f3d;
+  --about-on-accent: #ffffff;
+  --about-nav-hover: #242429;
+}
+
+.main {
+  flex: 1;
+  width: 100%;
+  background: var(--about-page-bg, var(--bg-page));
+  transition: background 0.2s;
+}
+
+.container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 8px 32px 64px 8px;
+  display: flex;
+  gap: 8px;
+  align-items: start;
+}
+
+.sidebar {
+  width: 240px;
+  min-width: 240px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  padding: 16px 0;
+  background: var(--about-panel, var(--bg-card));
+  border: none;
+  position: sticky;
+  top: calc(var(--header-offset, 0px) + 16px);
+  max-height: calc(100vh - var(--header-offset, 0px) - 32px);
+  overflow-y: auto;
+  transition: background 0.2s;
+}
+
+.sidebarTitle {
+  font-family: "Geologica", sans-serif;
+  font-size: 24px;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+  color: var(--color-black);
+  padding: 8px 32px;
+  transition: color 0.2s;
+}
+
+.sidebarNav {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+}
+
+.sidebarLink {
+  display: block;
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: var(--about-muted, var(--color-grey));
+  text-align: left;
+  padding: 12px 32px;
+  border-radius: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.43;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.sidebarLink:hover {
+  background: var(--about-nav-hover, var(--bg-ctrl));
+  color: var(--color-black);
+}
+
+.sidebarLinkActive {
+  background: var(--about-accent, var(--color-green));
+  color: var(--about-on-accent, #fff);
+}
+.sidebarLinkActive:hover {
+  background: var(--about-accent, var(--color-green));
+  color: var(--about-on-accent, #fff);
+  filter: brightness(0.92);
+}
+
+.content {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.section {
+  background: var(--about-panel, var(--bg-card));
+  border: none;
+  border-radius: 12px;
+  padding: 24px 32px 48px;
+  transition: background 0.2s;
+}
+
+.h1 {
+  font-family: "Geologica", sans-serif;
+  font-size: 24px;
+  line-height: 1.33;
+  letter-spacing: -0.03em;
+  color: var(--color-black);
+  margin: 0;
+}
+
+.lead {
+  margin: 14px 0 0;
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--color-grey);
+  max-width: 980px;
+}
+
+.text {
+  margin: 14px 0 0;
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--color-grey);
+  max-width: 980px;
+}
+
+.mediaGrid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: 240px 1fr 1fr;
+  grid-auto-rows: 152px;
+  gap: 12px;
+}
+
+.mediaItem {
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.mediaLogo {
+  background: linear-gradient(180deg, #f2f3f4 0%, #e7eaee 100%);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+.mediaImg {
+  object-fit: cover;
+}
+
+.mediaImgContain {
+  object-fit: contain;
+  padding: 18px 22px;
+}
+
+.placeholder {
+  margin-top: 14px;
+  border: 1px dashed var(--border-color);
+  border-radius: 14px;
+  padding: 16px;
+  color: var(--color-grey);
+  font-size: 14px;
+}
+
+.teamSection {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.teamTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.teamTabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.teamTab {
+  min-height: 40px;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-black);
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 1.43;
+  cursor: pointer;
+  transition: background 0.16s, color 0.16s, transform 0.16s;
+}
+
+.teamTab:hover {
+  transform: translateY(-1px);
+}
+
+.teamTabMuted {
+  background: var(--color-grey-bg);
+}
+
+.teamTabMuted:hover {
+  background: var(--border-color);
+}
+
+.teamTabActive {
+  background: #4d4d5c;
+  color: #fff;
+}
+
+.teamTabActive:hover {
+  background: #4d4d5c;
+  color: #fff;
+}
+
+.teamLead {
+  margin: 0;
+  max-width: 1120px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-black);
+}
+
+.teamGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.teamCard {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.teamPhotoPlaceholder {
+  height: 296px;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  background: #ececf1;
+}
+
+.teamPhoto {
+  width: 100%;
+  height: 296px;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  background: #ececf1;
+}
+
+.teamPhotoImg {
+  object-fit: cover;
+  object-position: top center;
+}
+
+.teamCardBottom {
+  padding-top: 16px;
+}
+
+.memberName {
+  font-family: "Geologica", sans-serif;
+  font-size: 20px;
+  letter-spacing: -0.04em;
+  line-height: 1.2;
+  color: var(--color-black);
+}
+
+.memberRole {
+  margin-top: 6px;
+  font-size: 14px;
+  line-height: 1.43;
+  color: var(--color-grey);
+}
+
+.allTeamCard {
+  min-height: 296px;
+  align-self: start;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--bg-page);
+  color: var(--color-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.16s, transform 0.16s, box-shadow 0.16s;
+}
+
+.allTeamCard:hover {
+  border-color: #006f3d;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(17, 17, 20, 0.08);
+}
+
+.clientsSection {
+  background: var(--about-panel, #ffffff);
+  border-color: var(--border-color, #e8e8ef);
+  transition: background 0.2s, border-color 0.2s;
+}
+
+:global([data-theme="dark"]) .clientsSection {
+  background: #0f1014;
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.clientsTitle {
+  margin: 0;
+  font-family: "Geologica", sans-serif;
+  font-size: 36px;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: var(--color-black);
+  transition: color 0.2s;
+}
+
+:global([data-theme="dark"]) .clientsTitle {
+  color: #fff;
+}
+
+.clientsLead {
+  margin: 10px 0 0;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--color-grey);
+  max-width: 980px;
+  transition: color 0.2s;
+}
+
+:global([data-theme="dark"]) .clientsLead {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.clientsGrid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.clientsStatus {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--color-grey);
+  transition: color 0.2s;
+}
+
+:global([data-theme="dark"]) .clientsStatus {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.clientCard {
+  min-height: 108px;
+  border-radius: 14px;
+  background: var(--about-nav-hover, #f0f0f5);
+  border: 1px solid var(--border-color, #e8e8ef);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px 10px;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+:global([data-theme="dark"]) .clientCard {
+  background: #23242c;
+  border-color: rgba(255, 255, 255, 0.04);
+}
+
+.clientCardActive {
+  background: #006f3d;
+}
+
+:global([data-theme="dark"]) .clientCardActive {
+  background: #008a4b;
+}
+
+.clientCardEmpty {
+  opacity: 0.55;
+}
+
+.clientLabel {
+  font-family: "Geologica", sans-serif;
+  font-size: 30px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--about-muted, #4d4d5c);
+  transition: color 0.2s;
+}
+
+:global([data-theme="dark"]) .clientLabel {
+  color: #aeb2c0;
+}
+
+.clientLogo {
+  width: auto;
+  max-width: 100%;
+  height: 48px;
+  object-fit: contain;
+}
+
+.clientCardActive .clientLabel {
+  color: #fff;
+}
+
+.certsSection {
+  background: var(--bg-page);
+  border-color: var(--border-color);
+}
+
+.certsGrid {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.certCard {
+  display: flex;
+  flex-direction: column;
+}
+
+.certCardWide {
+  grid-column: span 2;
+}
+
+.certCardInner {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  cursor: pointer;
+  gap: 10px;
+}
+
+.certPreview {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--bg-card, #f2f3f5);
+  border: 1px solid var(--border-color);
+  aspect-ratio: 3 / 4;
+  width: 100%;
+}
+
+[data-theme="dark"] .certPreview {
+  background: #1c1d22;
+}
+
+.certCardWide .certPreview {
+  aspect-ratio: 16 / 9;
+}
+
+.certPreviewImg {
+  object-fit: cover;
+}
+
+.certPreviewImgLandscape {
+  object-fit: cover;
+}
+
+.certPreviewPlaceholder {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.01) 100%);
+}
+
+[data-theme="dark"] .certPreviewPlaceholder {
+  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+}
+
+.certTitle {
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--color-grey);
+  padding: 0 2px;
+}
+
+// ── Corporate culture ──────────────────────────────────────────────────────────
+
+.cultureGallery {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cultureRow {
+  display: grid;
+  gap: 12px;
+}
+
+.cultureRowTop {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.cultureRowBottom {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.culturePhoto {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #ececf1;
+}
+
+.cultureRowTop .culturePhoto {
+  aspect-ratio: 1052 / 480;
+}
+
+.cultureRowBottom .culturePhoto {
+  aspect-ratio: 694 / 480;
+}
+
+.culturePhotoImg {
+  object-fit: cover;
+}
+
+.cultureTextBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.cultureParagraph {
+  margin: 0;
+  max-width: 1120px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-black);
+}
+
+// ── Vacancies ──────────────────────────────────────────────────────────────────
+
+.vacancyList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.vacancyCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  border-radius: 14px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.18s;
+}
+
+.vacancyCard:hover {
+  border-color: #006f3d;
+  box-shadow: 0 4px 18px rgba(0, 111, 61, 0.08);
+}
+
+.vacancyInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.vacancyTitle {
+  font-family: "Geologica", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--color-black);
+}
+
+.vacancyMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--color-grey);
+  flex-wrap: wrap;
+}
+
+.vacancyDot {
+  opacity: 0.4;
+}
+
+.vacancyBtn {
+  flex-shrink: 0;
+  padding: 10px 22px;
+  border-radius: 10px;
+  border: 1px solid #006f3d;
+  background: transparent;
+  color: #006f3d;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.16s, color 0.16s;
+  white-space: nowrap;
+}
+
+.vacancyBtn:hover {
+  background: #006f3d;
+  color: #fff;
+}
+
+:global([data-theme="dark"]) .vacancyBtn {
+  border-color: #00c870;
+  color: #00c870;
+}
+
+:global([data-theme="dark"]) .vacancyBtn:hover {
+  background: #00c870;
+  color: #0d1a13;
+}
+
+@media (max-width: 1280px) {
+  .container {
+    padding: 8px 32px 64px 0;
+  }
+}
+
+@media (max-width: 1100px) {
+  .container {
+    padding: 8px 20px 48px 0;
+  }
+
+  .sidebar {
+    width: 220px;
+    min-width: 220px;
+  }
+
+  .sidebarTitle {
+    padding: 4px 12px 12px;
+    font-size: 20px;
+  }
+
+  .sidebarLink {
+    padding: 10px 14px;
+  }
+
+  .mediaGrid {
+    grid-template-columns: 200px 1fr;
+    grid-auto-rows: 150px;
+  }
+
+  .teamGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .memberName {
+    font-size: 18px;
+  }
+
+  .memberRole {
+    font-size: 13px;
+  }
+
+  .clientsGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .clientLabel {
+    font-size: 24px;
+  }
+
+  .certsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .certCardWide {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 860px) {
+  .container {
+    flex-direction: column;
+    padding: 8px 16px 48px;
+  }
+
+  .sidebar {
+    width: 100%;
+    min-width: unset;
+    position: static;
+    padding: 16px 12px 20px;
+    border-radius: 12px;
+  }
+
+  .sidebarTitle {
+    padding: 4px 12px 12px;
+  }
+
+  .sidebarNav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .sidebarLink {
+    width: auto;
+    flex-shrink: 0;
+    padding: 8px 12px;
+    border-radius: 8px;
+  }
+
+  .teamGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .teamTop {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .teamTabs {
+    width: 100%;
+  }
+
+  .clientsTitle {
+    font-size: 30px;
+  }
+
+  .clientsLead {
+    font-size: 13px;
+  }
+
+  .clientsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .clientLabel {
+    font-size: 20px;
+  }
+
+  .certsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .certCardWide {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 860px) {
+  .cultureRowTop {
+    grid-template-columns: 1fr;
+  }
+
+  .cultureRowBottom {
+    grid-template-columns: 1fr;
+  }
+
+  .vacancyCard {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .vacancyBtn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 560px) {
+  .teamGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .teamPhotoPlaceholder {
+    height: 260px;
+  }
+
+  .allTeamCard {
+    min-height: 260px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 8px 12px 32px;
+  }
+
+  .section {
+    padding: 20px 16px 32px;
+    border-radius: 10px;
+  }
+
+  .h1 {
+    font-size: 20px;
+  }
+
+  .lead,
+  .text {
+    font-size: 13px;
+  }
+
+  .mediaGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 140px;
+  }
+
+  .clientsTitle {
+    font-size: 26px;
+  }
+
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 8px 8px 24px;
+  }
+
+  .section {
+    padding: 16px 12px 24px;
+  }
+
+  .mediaGrid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 200px;
+  }
+
+  .clientsTitle {
+    font-size: 22px;
+  }
+
+  .clientsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .clientLabel {
+    font-size: 16px;
+  }
+
+  .clientCard {
+    min-height: 88px;
+    padding: 6px 8px;
+  }
+
+  .certsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .teamPhotoPlaceholder,
+  .teamPhoto {
+    height: 220px;
+  }
+
+  .allTeamCard {
+    min-height: 220px;
+  }
+
+  .memberName {
+    font-size: 16px;
+  }
+
+  .memberRole {
+    font-size: 12px;
+  }
+}
+

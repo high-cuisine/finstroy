@@ -1,0 +1,15 @@
+.msg {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-grey);
+  transition: color 0.2s;
+}
+
+.error {
+  color: #c0392b;
+}
+
+:global([data-theme="dark"]) .error {
+  color: #ff6b6b;
+}

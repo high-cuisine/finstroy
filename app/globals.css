@@ -1,0 +1,148 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Geologica";
+  font-style: normal;
+  font-weight: 300 500;
+  font-display: swap;
+  src: url("https://fonts.gstatic.com/s/geologica/v1/oY1o8evIr7j9P3TN9YwNAdyjzUyDKkKd.woff2")
+    format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+@font-face {
+  font-family: "Geologica";
+  font-style: normal;
+  font-weight: 300 500;
+  font-display: swap;
+  src: url("https://fonts.gstatic.com/s/geologica/v1/oY1o8evIr7j9P3TN9YwNAdyjzUyDKkKdAQ.woff2")
+    format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+    U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@theme inline {
+  --color-white: #ffffff;
+  --color-black: #111114;
+  --color-grey: #4d4d5c;
+  --color-grey-light: #9d9da3;
+  --color-grey-bg: #f0f0f5;
+  --color-green: #006f3d;
+  --color-green-light: #cff9e6;
+  --color-border: #dcdce0;
+  --color-dark: #0e0e14;
+
+  --font-inter: "Inter", sans-serif;
+  --font-geologica: "Geologica", sans-serif;
+}
+
+/* ── Theme-aware CSS variables ─────────────────────────────────────────── */
+
+:root {
+  --app-outer-bg: #f0f0f5;
+
+  /* Page / surface */
+  --bg-page: #ffffff;
+  --bg-surface: #f0f0f5;
+  --bg-card: #ffffff;
+  --bg-ctrl: #f0f0f5;        /* small interactive controls: location btn, cart */
+  --border-color: #dcdce0;
+
+  /* Catalog / products page */
+  --cat-bg: #f5f5f8;
+  --cat-surface: #ffffff;
+  --cat-elevated: #f0f0f5;   /* table headers, elevated areas */
+  --cat-border: #dcdce0;
+  --cat-text: #111114;
+  --cat-text-sub: #4d4d5c;
+  --cat-placeholder: #9d9da3;
+  --cat-input-bg: #ffffff;
+  --cat-tbl-head: #f0f0f5;
+  --cat-tbl-body: #ffffff;
+  --cat-cat-text: #4d4d5c;   /* sidebar inactive category text */
+  --cat-img-bg: #e8e8ef;     /* product image placeholder */
+  --select-arrow: #9d9da3;
+  --news-date: #6b6b7a;
+}
+
+[data-theme="dark"] {
+  --app-outer-bg: #2b2b31;
+
+  /* Override Tailwind design tokens so Tailwind utilities adapt automatically */
+  --color-black: #ffffff;
+  --color-grey: #9696a3;
+  --color-grey-light: #9696a3;
+  --color-grey-bg: #242429;
+  --color-border: #36363d;
+
+  /* Page / surface */
+  --bg-page: #111114;
+  --bg-surface: #242429;
+  --bg-card: #1c1c22;
+  --bg-ctrl: #2c2c34;
+  --border-color: #36363d;
+
+  /* Catalog / products page */
+  --cat-bg: #111114;
+  --cat-surface: #111114;
+  --cat-elevated: #242429;
+  --cat-border: #36363d;
+  --cat-text: #ffffff;
+  --cat-text-sub: #9696a3;
+  --cat-placeholder: #9696a3;
+  --cat-input-bg: #111114;
+  --cat-tbl-head: #242429;
+  --cat-tbl-body: #111114;
+  --cat-cat-text: #9696a3;
+  --cat-img-bg: #242429;
+  --select-arrow: #9696a3;
+  --news-date: #484852;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--app-outer-bg);
+  color: var(--color-black);
+  font-family: 'Geologica';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-geologica {
+  font-family: var(--font-geologica);
+}
+
+.font-inter {
+  font-family: var(--font-inter);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Theme switch animation — applied only during the toggle, then removed */
+html.theme-transitioning,
+html.theme-transitioning * {
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    fill 0.25s ease,
+    stroke 0.25s ease,
+    box-shadow 0.25s ease !important;
+}
