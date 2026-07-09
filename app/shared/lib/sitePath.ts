@@ -1,14 +1,23 @@
-export const UNLOCK_BASE = "/unlock";
+import { getSiteBase, PHYSICAL_PREFIX } from "@/app/shared/lib/maintenanceMode";
+
+/** @deprecated Prefer getSiteBase() — kept for unlock-gate login redirects. */
+export const UNLOCK_BASE = PHYSICAL_PREFIX;
 
 export function sitePath(path = "/"): string {
-  if (path === "/") return UNLOCK_BASE;
-  return `${UNLOCK_BASE}${path.startsWith("/") ? path : `/${path}`}`;
+  const base = getSiteBase();
+  if (path === "/") return base || "/";
+  const normalized = path.startsWith("/") ? path : `/${path}`;
+  return `${base}${normalized}`;
 }
 
 export function stripUnlockBase(pathname: string): string {
-  if (pathname === UNLOCK_BASE) return "/";
-  if (pathname.startsWith(`${UNLOCK_BASE}/`)) {
-    return pathname.slice(UNLOCK_BASE.length);
+  if (pathname === PHYSICAL_PREFIX) return "/";
+  if (pathname.startsWith(`${PHYSICAL_PREFIX}/`)) {
+    return pathname.slice(PHYSICAL_PREFIX.length);
   }
   return pathname;
+}
+
+export function isHomePath(pathname: string): boolean {
+  return stripUnlockBase(pathname) === "/";
 }

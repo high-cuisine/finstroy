@@ -5,9 +5,12 @@ import {
   isValidUnlockGateToken,
   UNLOCK_GATE_COOKIE,
 } from "@/app/shared/lib/unlockGate";
-import { UNLOCK_BASE } from "@/app/shared/lib/sitePath";
+import {
+  isMaintenanceModeServer,
+  PHYSICAL_PREFIX,
+} from "@/app/shared/lib/maintenanceMode";
 
-const LOGIN_PATH = `${UNLOCK_BASE}/login`;
+const LOGIN_PATH = `${PHYSICAL_PREFIX}/login`;
 
 function isPublicAsset(pathname: string): boolean {
   if (pathname.startsWith("/_next") || pathname.startsWith("/api")) {
@@ -17,19 +20,18 @@ function isPublicAsset(pathname: string): boolean {
   return /\.(?:svg|png|jpg|jpeg|gif|webp|ico|mp4|woff2?)$/i.test(pathname);
 }
 
-export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+function rewriteToPhysical(request: NextRequest, pathname: string): NextResponse {
+  const target =
+    pathname === "/" ? PHYSICAL_PREFIX : `${PHYSICAL_PREFIX}${pathname}`;
+  return NextResponse.rewrite(new URL(target, request.url));
+}
 
-  if (pathname === "/" || isPublicAsset(pathname)) {
-    return NextResponse.next();
-  }
-
-  if (!pathname.startsWith(UNLOCK_BASE)) {
-    return NextResponse.redirect(new URL("/", request.url));
-  }
-
+async function handleUnlockGate(
+  request: NextRequest,
+  pathname: string,
+): Promise<NextResponse | null> {
   if (!isUnlockGateConfigured()) {
-    return NextResponse.next();
+    return null;
   }
 
   const secret = getUnlockGateSecret();
@@ -44,10 +46,39 @@ export async function middleware(request: NextRequest) {
   }
 
   if (isAuthenticated && isLoginPage) {
-    return NextResponse.redirect(new URL(UNLOCK_BASE, request.url));
+    return NextResponse.redirect(new URL(PHYSICAL_PREFIX, request.url));
   }
 
-  return NextResponse.next();
+  return null;
+}
+
+export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  if (isPublicAsset(pathname)) {
+    return NextResponse.next();
+  }
+
+  if (isMaintenanceModeServer()) {
+    if (pathname === "/") {
+      return NextResponse.next();
+    }
+
+    if (!pathname.startsWith(PHYSICAL_PREFIX)) {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+
+    const gateResponse = await handleUnlockGate(request, pathname);
+    return gateResponse ?? NextResponse.next();
+  }
+
+  if (pathname.startsWith(PHYSICAL_PREFIX)) {
+    const stripped =
+      pathname === PHYSICAL_PREFIX ? "/" : pathname.slice(PHYSICAL_PREFIX.length);
+    return NextResponse.redirect(new URL(stripped || "/", request.url));
+  }
+
+  return rewriteToPhysical(request, pathname);
 }
 
 export const config = {

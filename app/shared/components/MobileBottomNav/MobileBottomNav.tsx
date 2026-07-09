@@ -5,7 +5,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useMemo } from "react";
 import { useCatalogMenuStore } from "@/app/features/catalogMenu";
 import { useCartStore } from "@/app/features/cart";
-import { sitePath, stripUnlockBase, UNLOCK_BASE } from "@/app/shared/lib/sitePath";
+import { isHomePath, sitePath, stripUnlockBase } from "@/app/shared/lib/sitePath";
 import styles from "./MobileBottomNav.module.scss";
 
 type NavItemId = "home" | "catalog" | "cart" | "profile";
@@ -115,7 +115,7 @@ export default function MobileBottomNav() {
 
   const handleHomeClick = () => {
     closeMenu();
-    if (pathname !== UNLOCK_BASE) {
+    if (!isHomePath(pathname)) {
       router.push(sitePath("/"));
     }
   };
