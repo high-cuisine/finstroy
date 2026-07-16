@@ -99,6 +99,8 @@
   letter-spacing: -0.03em;
   color: var(--color-black);
   transition: color 0.2s;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .titleCity {
@@ -204,6 +206,9 @@
   min-height: calc(1.4em * 2);
   color: var(--color-grey);
   transition: color 0.2s;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  white-space: normal;
 }
 
 // ── Map placeholder ───────────────────────────────────────────────────────────

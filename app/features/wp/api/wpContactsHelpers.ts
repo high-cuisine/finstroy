@@ -6,6 +6,7 @@ export type WpContactAcf = {
   officeAddress: string;
   warehouseAddress: string;
   workSchedule: string;
+  /** ACF «Город подразделения» (unit-city) — как в WP, без эвристик. */
   unitCity: string;
 };
 
@@ -77,21 +78,22 @@ function stripPrefix(value: string, ...prefixes: string[]): string {
 function isPlaceholderValue(value: string): boolean {
   const v = value.trim().toLowerCase().replace(/\s+/g, " ");
   if (!v) return true;
-  return /^(адрес\s+склада|адрес\s+офиса|склад|офис|телефон|e-?mail|email|график\s+работы)$/i.test(
+  return /^(адрес\s+склада|адрес\s+офиса|адрес\s+офиса\s+и\s+склада|склад|офис|телефон|e-?mail|email|график\s+работы)$/i.test(
     v,
   );
 }
 
 /**
- * В office_address часто «Офис: … Склад: …» одной строкой.
- * Режем на офис / склад. Не путать с префиксом «Офис и склад:».
+ * В office_address часто «Офис: … Склад: …» одной строкой
+ * или «Адрес офиса и склада: …» / «Офис и склад: …».
  */
 function splitOfficeAndWarehouse(raw: string): {
   office: string;
   warehouse: string;
+  shared: boolean;
 } {
   const cleaned = raw.trim();
-  if (!cleaned) return { office: "", warehouse: "" };
+  if (!cleaned) return { office: "", warehouse: "", shared: false };
 
   // Отдельный маркер склада (не «офис и склад»)
   const warehouseMatch = cleaned.match(
@@ -99,30 +101,58 @@ function splitOfficeAndWarehouse(raw: string): {
   );
   if (warehouseMatch && warehouseMatch.index != null && warehouseMatch.index > 0) {
     const before = cleaned.slice(0, warehouseMatch.index).trim();
-    // «Офис и» + «склад: …» — это один общий адрес, не два
-    if (!/офис\s+и\s*$/i.test(before)) {
+    if (!/офис\s+и\s*$/i.test(before) && !/адрес\s+офиса\s+и\s*$/i.test(before)) {
       const warehouse = warehouseMatch[1].trim();
-      const office = stripPrefix(before, "Офис и склад", "Офис", "Склад");
+      const office = stripPrefix(
+        before,
+        "Адрес офиса и склада",
+        "Адрес офиса",
+        "Офис и склад",
+        "Офис",
+        "Склад",
+      );
       return {
         office: isPlaceholderValue(office) ? "" : office,
         warehouse: isPlaceholderValue(warehouse) ? "" : warehouse,
+        shared: false,
       };
     }
   }
 
-  // «Офис и склад: …» — один общий адрес на оба блока
-  const combined = /^\s*офис\s+и\s+склад\s*:?\s*/i.test(cleaned);
-  const office = stripPrefix(cleaned, "Офис и склад", "Офис", "Склад");
+  // Один общий адрес на офис и склад
+  const shared =
+    /^\s*(?:адрес\s+офиса\s+и\s+склада|офис\s+и\s+склад)\s*:?\s*/i.test(
+      cleaned,
+    );
+  const office = stripPrefix(
+    cleaned,
+    "Адрес офиса и склада",
+    "Адрес офиса",
+    "Офис и склад",
+    "Офис",
+    "Склад",
+  );
   const officeClean = isPlaceholderValue(office) ? "" : office;
   return {
     office: officeClean,
-    warehouse: combined ? officeClean : "",
+    warehouse: shared ? officeClean : "",
+    shared,
   };
+}
+
+function cleanWarehouseField(raw: string | undefined): string {
+  if (!raw?.trim()) return "";
+  const cleaned = stripPrefix(raw, "Адрес склада", "Склад", "Адрес");
+  return isPlaceholderValue(cleaned) ? "" : cleaned;
 }
 
 function parseAcf(acf: WpContactRest["acf"]): WpContactAcf {
   const phoneRaw = acf?.unit_phone_number
-    ? stripPrefix(acf.unit_phone_number, "Телефон")
+    ? stripPrefix(
+        acf.unit_phone_number,
+        "Многоканальный телефон",
+        "Телефон",
+      )
     : "";
   const emailRaw = acf?.unit_email
     ? stripPrefix(acf.unit_email, "E-mail", "Email")
@@ -131,22 +161,33 @@ function parseAcf(acf: WpContactRest["acf"]): WpContactAcf {
     ? stripPrefix(acf.work_schedule, "График работы")
     : "";
 
-  const { office, warehouse: warehouseFromOffice } = splitOfficeAndWarehouse(
-    acf?.office_address ?? "",
-  );
+  const {
+    office,
+    warehouse: warehouseFromOffice,
+  } = splitOfficeAndWarehouse(acf?.office_address ?? "");
 
-  const warehouseFromAcf = acf?.sklad_address
-    ? stripPrefix(acf.sklad_address, "Адрес склада", "Склад")
-    : "";
-  const warehouseAddress =
-    (!isPlaceholderValue(warehouseFromAcf) ? warehouseFromAcf : "") ||
-    warehouseFromOffice;
+  // ACF «Адрес склада» — приоритетный источник
+  const warehouseFromAcf = cleanWarehouseField(acf?.sklad_address);
+  const warehouseAddress = warehouseFromAcf || warehouseFromOffice;
 
   // Телефон иногда зашит в office_address (Краснодар и т.п.)
   let phone = !isPlaceholderValue(phoneRaw) ? phoneRaw : "";
   if (!phone && acf?.office_address) {
     const fromAddr = extractContactFields(acf.office_address).phones[0];
     if (fromAddr) phone = fromAddr;
+  }
+
+  // Если в phone остался мусор без цифр
+  if (phone && !/\d/.test(phone)) {
+    phone = "";
+    if (acf?.office_address) {
+      const fromAddr = extractContactFields(acf.office_address).phones[0];
+      if (fromAddr) phone = fromAddr;
+    }
+    if (!phone && acf?.unit_phone_number) {
+      const fromPhone = extractContactFields(acf.unit_phone_number).phones[0];
+      if (fromPhone) phone = fromPhone;
+    }
   }
 
   return {
@@ -252,8 +293,7 @@ const DEFAULT_COMPANY_NAME = "АО «ФИН-Стройматериалы»";
 const DEFAULT_PHONE = "8 (800) 550-02-20";
 const DEFAULT_EMAIL = "info@finstroy.ru";
 const DEFAULT_HOURS = "Пн – Пт с 8:00 до 18:00";
-const FALLBACK_OFFICE =
-  "Адрес офиса уточняйте у менеджеров.";
+const FALLBACK_OFFICE = "Адрес офиса уточняйте у менеджеров.";
 const FALLBACK_WAREHOUSE =
   "Уточняйте адрес склада в карточке города или у менеджеров.";
 
@@ -266,14 +306,45 @@ function phoneToTelHref(phone: string): string {
   return `tel:+${normalized}`;
 }
 
-/** Юр. название из ACF unit-city; если там просто город — дефолт. */
+/** unit-city выглядит как юрлицо, а не как название города. */
+export function looksLikeLegalEntity(value: string): boolean {
+  const v = value.trim();
+  if (!v) return false;
+  return (
+    /\b(ООО|АО|ЗАО|ПАО|ОАО|ИП)\b/i.test(v) ||
+    /общество|обособленн|филиал/i.test(v)
+  );
+}
+
+/**
+ * Полное имя города для UI:
+ * — ACF «Город подразделения», если это не юрлицо («Москва (тест)»)
+ * — иначе title поста («Москва»).
+ */
+export function resolveDisplayCityName(contact: WpContactItem): string {
+  const unit = contact.acf.unitCity.trim();
+  if (unit && !looksLikeLegalEntity(unit)) return unit;
+  return contact.title;
+}
+
+/** Юр. название: unit-city если там ООО/АО…, иначе дефолт. */
 export function resolveCompanyName(contact: WpContactItem): string {
   const unit = contact.acf.unitCity.trim();
-  if (!unit) return DEFAULT_COMPANY_NAME;
-  if (unit.toLowerCase() === contact.title.toLowerCase()) {
-    return DEFAULT_COMPANY_NAME;
+  if (unit && looksLikeLegalEntity(unit)) return unit;
+  return DEFAULT_COMPANY_NAME;
+}
+
+/**
+ * Подзаголовок H1 / карточки:
+ * — если город из ACF полнее title («Москва (тест)») — показываем целиком
+ * — иначе «в Москве» по slug.
+ */
+export function resolveCityHeading(contact: WpContactItem): string {
+  const display = resolveDisplayCityName(contact);
+  if (display.toLowerCase() !== contact.title.toLowerCase()) {
+    return display;
   }
-  return unit;
+  return cityHeadingLine(contact.slug, contact.title);
 }
 
 export function buildOfficeCardViewModel(
@@ -284,21 +355,18 @@ export function buildOfficeCardViewModel(
   const phone = contact.acf.phone || parsed.phones[0] || DEFAULT_PHONE;
   const email = contact.acf.email || parsed.emails[0] || DEFAULT_EMAIL;
   const hours =
-    contact.acf.workSchedule ||
-    parsed.hoursLine?.trim() ||
-    DEFAULT_HOURS;
+    contact.acf.workSchedule || parsed.hoursLine?.trim() || DEFAULT_HOURS;
   const officeAddress =
     contact.acf.officeAddress ||
     parsed.officeAddress?.trim() ||
     FALLBACK_OFFICE;
+  // Склад: ACF sklad_address → office split → content → тот же адрес офиса
   const warehouseAddress =
     contact.acf.warehouseAddress ||
     parsed.warehouseAddress?.trim() ||
-    "";
+    (contact.acf.officeAddress ? contact.acf.officeAddress : "");
 
-  const fields: OfficeCardField[] = [
-    { label: "Офис", value: officeAddress },
-  ];
+  const fields: OfficeCardField[] = [{ label: "Офис", value: officeAddress }];
 
   if (warehouseAddress) {
     fields.push({ label: "Склад", value: warehouseAddress });
@@ -312,8 +380,8 @@ export function buildOfficeCardViewModel(
 
   return {
     slug: contact.slug,
-    cityTitle: contact.title,
-    cityHeading: cityHeadingLine(contact.slug, contact.title),
+    cityTitle: resolveDisplayCityName(contact),
+    cityHeading: resolveCityHeading(contact),
     companyName: companyName ?? resolveCompanyName(contact),
     fields,
   };

@@ -2,10 +2,11 @@
 
 import { useEffect, useMemo, useState } from "react";
 import {
-  cityHeadingLine,
   fetchContactPosts,
   parseContactLayout,
+  resolveCityHeading,
   resolveCompanyName,
+  resolveDisplayCityName,
   type WpContactItem,
   DEFAULT_EMAIL,
   DEFAULT_HOURS,
@@ -31,7 +32,9 @@ export function useContactsPage() {
         }
       })
       .catch((e: unknown) => {
-        if (!cancelled) setError(e instanceof Error ? e.message : "Ошибка загрузки");
+        if (!cancelled) {
+          setError(e instanceof Error ? e.message : "Ошибка загрузки");
+        }
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -73,8 +76,13 @@ export function useContactsPage() {
   }, [active, parsed]);
 
   const warehouseAddr = useMemo(() => {
+    // 1) ACF «Адрес склада»
     if (active?.acf.warehouseAddress) return active.acf.warehouseAddress;
-    return parsed?.warehouseAddress?.trim() || FALLBACK_WAREHOUSE;
+    // 2) content HTML
+    if (parsed?.warehouseAddress?.trim()) return parsed.warehouseAddress.trim();
+    // 3) тот же адрес, что у офиса (часто офис = склад)
+    if (active?.acf.officeAddress) return active.acf.officeAddress;
+    return FALLBACK_WAREHOUSE;
   }, [active, parsed]);
 
   const companyName = useMemo(
@@ -82,8 +90,8 @@ export function useContactsPage() {
     [active],
   );
 
-  const headingCity = active ? cityHeadingLine(active.slug, active.title) : "";
-  const cityLabel = active?.title ?? "Финстрой";
+  const headingCity = active ? resolveCityHeading(active) : "";
+  const cityLabel = active ? resolveDisplayCityName(active) : "Финстрой";
 
   return {
     items,

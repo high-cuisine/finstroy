@@ -1,4 +1,7 @@
-import type { WpContactItem } from "@/app/features/wp/api/wpContactsApi";
+import {
+  resolveDisplayCityName,
+  type WpContactItem,
+} from "@/app/features/wp/api/wpContactsApi";
 import styles from "./CityBar.module.scss";
 
 interface CityBarProps {
@@ -25,7 +28,7 @@ export default function CityBar({ items, activeSlug, loading, error, onChange }:
               className={`${styles.cityTab}${activeSlug === c.slug ? ` ${styles.cityTabActive}` : ""}`}
               onClick={() => onChange(c.slug)}
             >
-              {c.title}
+              {resolveDisplayCityName(c)}
             </button>
           ))
         )}
