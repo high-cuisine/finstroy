@@ -8,10 +8,9 @@ import FaqSection from "./components/FaqSection/FaqSection";
 import NewsSection from "./components/NewsSection";
 import Footer from "@/app/shared/componets/layout/Footer/Footer";
 import { loadMainPageData } from "./loadMainPageData";
-import { CONTENT_REVALIDATE_SECONDS } from "@/app/shared/lib/isr";
 import styles from "./page.module.scss";
 
-export const revalidate = CONTENT_REVALIDATE_SECONDS;
+export const revalidate = 180;
 
 export default async function MainPage() {
   const { acf, mainNewsItems, contacts } = await loadMainPageData();
