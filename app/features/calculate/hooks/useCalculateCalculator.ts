@@ -2,8 +2,8 @@ import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import type { CutPiece } from '@/app/unlock/(site)/(pages)/calculate/helpers/types';
 import { expandPiecesForPacking, packPieces } from '@/app/unlock/(site)/(pages)/calculate/helpers/packPieces';
 import { INITIAL_PIECES } from '@/app/unlock/(site)/(pages)/calculate/helpers/constants';
-import { postCutting } from '../api/calculatorApi';
-import type { CuttingResponse } from '../api/types';
+import { postCutting, postGeneratePdf } from '../api/calculatorApi';
+import type { CuttingRequest, CuttingResponse } from '../api/types';
 import { partsFromPieces } from '../utils/partsFromPieces';
 import { useCalculatorStaticData } from './useCalculatorStaticData';
 import { useCartStore } from '@/app/features/cart';
@@ -45,6 +45,8 @@ export function useCalculateCalculator() {
   const [cartProductId, setCartProductId] = useState<number | null>(null);
   const [addingToCart, setAddingToCart] = useState(false);
   const [addToCartError, setAddToCartError] = useState<string | null>(null);
+  const [generatingPdf, setGeneratingPdf] = useState(false);
+  const [pdfError, setPdfError] = useState<string | null>(null);
   const addItem = useCartStore((s) => s.addItem);
   const [newSheetNotice, setNewSheetNotice] = useState<{ sheetNumber: number } | null>(
     null
@@ -159,9 +161,28 @@ export function useCalculateCalculator() {
     sheetWidth > 0 &&
     sheetHeight > 0;
 
+  const cuttingRequestBody = useMemo<CuttingRequest | null>(() => {
+    if (!canPost || requestParts.length === 0) return null;
+    return {
+      sheet_width: sheetWidth,
+      sheet_height: sheetHeight,
+      parts: requestParts,
+      blade_width_id: bladeWidthIdResolved as number,
+      thickness_id: thicknessIdResolved as number,
+      material_id: materialIdResolved as number,
+    };
+  }, [
+    canPost,
+    requestParts,
+    sheetWidth,
+    sheetHeight,
+    bladeWidthIdResolved,
+    thicknessIdResolved,
+    materialIdResolved,
+  ]);
+
   useEffect(() => {
-    if (!canPost) return;
-    if (requestParts.length === 0) return;
+    if (!cuttingRequestBody) return;
 
     abortRef.current?.abort();
     const ac = new AbortController();
@@ -171,17 +192,7 @@ export function useCalculateCalculator() {
     const timer = setTimeout(() => {
       setCuttingLoading(true);
       setCuttingError(null);
-      postCutting(
-        {
-          sheet_width: sheetWidth,
-          sheet_height: sheetHeight,
-          parts: requestParts,
-          blade_width_id: bladeWidthIdResolved as number,
-          thickness_id: thicknessIdResolved as number,
-          material_id: materialIdResolved as number,
-        },
-        { signal: ac.signal }
-      )
+      postCutting(cuttingRequestBody, { signal: ac.signal })
         .then((res) => {
           if (seq !== requestSeq.current) return;
           setCuttingResult(res);
@@ -201,15 +212,7 @@ export function useCalculateCalculator() {
       clearTimeout(timer);
       ac.abort();
     };
-  }, [
-    canPost,
-    sheetWidth,
-    sheetHeight,
-    requestParts,
-    bladeWidthIdResolved,
-    thicknessIdResolved,
-    materialIdResolved,
-  ]);
+  }, [cuttingRequestBody]);
 
   const displayCuttingResult = canPost ? cuttingResult : null;
   const displayCuttingLoading = cuttingLoading && canPost;
@@ -233,6 +236,20 @@ export function useCalculateCalculator() {
       setAddingToCart(false);
     }
   }, [cartProductId, displayCuttingResult, addItem]);
+
+  const downloadPdf = useCallback(async () => {
+    if (!cuttingRequestBody) return;
+    setGeneratingPdf(true);
+    setPdfError(null);
+    try {
+      const res = await postGeneratePdf(cuttingRequestBody);
+      window.open(res.pdf_url, '_blank', 'noopener,noreferrer');
+    } catch (e) {
+      setPdfError(e instanceof Error ? e.message : 'Ошибка формирования PDF');
+    } finally {
+      setGeneratingPdf(false);
+    }
+  }, [cuttingRequestBody]);
 
   const addPiece = useCallback(() => {
     jumpToNewSheetRef.current = true;
@@ -323,6 +340,11 @@ export function useCalculateCalculator() {
     addingToCart,
     addToCartError,
     canAddToCart: cartProductId !== null && !addingToCart,
+
+    downloadPdf,
+    generatingPdf,
+    pdfError,
+    canDownloadPdf: cuttingRequestBody !== null && !generatingPdf,
 
     newSheetNotice,
     dismissNewSheetNotice,

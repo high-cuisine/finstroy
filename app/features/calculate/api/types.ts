@@ -53,3 +53,8 @@ export type CuttingResponse = {
   price_per_meter: number;
   total_price: number;
 };
+
+export type GeneratePdfResponse = {
+  success: boolean;
+  pdf_url: string;
+};

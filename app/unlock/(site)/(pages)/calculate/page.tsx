@@ -64,6 +64,10 @@ export default function CalculatePage() {
               canAddToCart={calc.canAddToCart}
               rotation={calc.rotation}
               setRotation={calc.setRotation}
+              onDownloadPdf={() => void calc.downloadPdf()}
+              generatingPdf={calc.generatingPdf}
+              canDownloadPdf={calc.canDownloadPdf}
+              pdfError={calc.pdfError}
             />
 
             <CalculateRightPanel

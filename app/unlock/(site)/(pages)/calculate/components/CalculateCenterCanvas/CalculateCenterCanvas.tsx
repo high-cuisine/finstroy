@@ -28,6 +28,10 @@ type Props = {
   canAddToCart: boolean;
   rotation: number;
   setRotation: Dispatch<SetStateAction<number>>;
+  onDownloadPdf: () => void;
+  generatingPdf: boolean;
+  canDownloadPdf: boolean;
+  pdfError: string | null;
 };
 
 type DragState = {
@@ -78,6 +82,10 @@ export function CalculateCenterCanvas({
   canAddToCart,
   rotation,
   setRotation,
+  onDownloadPdf,
+  generatingPdf,
+  canDownloadPdf,
+  pdfError,
 }: Props) {
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const [dragDelta, setDragDelta] = useState(0);
@@ -247,11 +255,17 @@ export function CalculateCenterCanvas({
           <CartIcon />
           {addingToCart ? 'Добавляем…' : 'Добавить в корзину'}
         </button>
-        <button type="button" className={cls.pdfBtn}>
+        <button
+          type="button"
+          className={cls.pdfBtn}
+          onClick={onDownloadPdf}
+          disabled={!canDownloadPdf || generatingPdf}
+        >
           <PdfIcon />
-          Сохранить в PDF
+          {generatingPdf ? 'Формируем…' : 'Сохранить в PDF'}
         </button>
       </div>
+      {pdfError && <p className={cls.pdfError}>{pdfError}</p>}
     </div>
   );
 }

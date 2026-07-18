@@ -4,7 +4,10 @@ import Header from "@/app/shared/componets/layout/Header/Header";
 import Footer from "@/app/shared/componets/layout/Footer/Footer";
 import { getNewsById } from "@/app/features/wp/api/wpNewsApi";
 import { sitePath } from "@/app/shared/lib/sitePath";
+import { CONTENT_REVALIDATE_SECONDS } from "@/app/shared/lib/isr";
 import styles from "./article.module.scss";
+
+export const revalidate = CONTENT_REVALIDATE_SECONDS;
 
 function ArrowLeft({ className }: { className?: string }) {
   return (

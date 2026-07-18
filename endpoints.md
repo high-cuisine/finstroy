@@ -95,3 +95,22 @@ https://finstroy-wp.razvit.tech/wp-json/cubic-calculator/v1/cutting - POST `/api
 "total_price": 39.33
 }
 Поля ответа
+
+https://finstroy-wp.razvit.tech/wp-json/cubic-calculator/v1/generate-pdf - POST `/api/cubic-calculator/generate-pdf` генерация PDF со схемой раскроя (тот же body, что и `/cutting`)
+Пример запроса
+{
+"sheet_width": 1525,
+"sheet_height": 1525,
+"parts": [
+{"width": 500, "height": 400, "quantity": 6}
+],
+"blade_width_id": 1,
+"thickness_id": 1
+}
+Ответ
+{
+"success": true,
+"pdf_url": "https://finstroy-wp.razvit.tech/wp-content/uploads/cutting-pdfs/cutting-....pdf",
+"cutting_result": { "success": true, "sheets_used": 1, "sheets": [...], "total_cut_length": 3.13, "total_parts": 6, "waste_area": 1.13, "price_per_meter": 9, "total_price": 28.13 }
+}
+`pdf_url` отдаёт напрямую WP (публичный, без авторизации) — фронт открывает его в новой вкладке, файл не проксируется.
