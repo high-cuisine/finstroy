@@ -109,6 +109,8 @@
 }
 
 body {
+  width: 100vw;
+  overflow-x: hidden;
   background: var(--app-outer-bg);
   color: var(--color-black);
   font-family: 'Geologica';

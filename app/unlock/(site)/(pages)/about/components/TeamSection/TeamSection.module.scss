@@ -92,6 +92,13 @@
   color: var(--color-black);
 }
 
+.teamStatus {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-grey);
+}
+
 .teamGrid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -269,6 +276,12 @@
   font-size: 13px;
   color: var(--color-grey);
   flex-wrap: wrap;
+}
+
+.vacancyMetaItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .vacancyDot {

@@ -21,7 +21,6 @@ export default function ContactsPage() {
     hoursLine,
     officeAddr,
     warehouseAddr,
-    companyName,
     headingCity,
     cityLabel,
   } = useContactsPage();
@@ -54,7 +53,6 @@ export default function ContactsPage() {
                   <br />
                   <span className={styles.titleCity}>{headingCity}</span>
                 </h1>
-                <p className={styles.company}>{companyName}</p>
               </div>
 
               <div className={styles.grid}>
