@@ -53,7 +53,6 @@ export function CatalogMenuOverlay() {
   const [productsLoading, setProductsLoading] = useState(false);
   const [productsError, setProductsError] = useState<string | null>(null);
 
-  const popular = useMemo(() => ["Столешницы", "Авиационная фанера", "ДСП"], []);
   const leftPanelRef = useRef<HTMLElement | null>(null);
   const rightPanelRef = useRef<HTMLDivElement | null>(null);
   const shellRef = useRef<HTMLDivElement | null>(null);
@@ -262,34 +261,6 @@ export function CatalogMenuOverlay() {
                     </div>
                   </>
                 )}
-
-                <div className={styles.section}>
-                  <div className={styles.sectionTitle}>Популярные запросы</div>
-                </div>
-                <div className={styles.section} style={{ paddingTop: 0 }}>
-                  <div className={styles.searchList} aria-label="Популярные запросы">
-                    {popular.map((q, idx) => (
-                      <button
-                        key={`${q}-${idx}`}
-                        type="button"
-                        className={styles.searchRow}
-                        onClick={() => {
-                          setQuery(q);
-                          addToHistory(q);
-                        }}
-                      >
-                        <Image
-                          src="/icons/history.svg"
-                          alt=""
-                          width={22}
-                          height={22}
-                          className={styles.rowIcon}
-                        />
-                        <span className={styles.rowText}>{q}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
               </>
             ) : (
               <>

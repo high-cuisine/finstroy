@@ -8,6 +8,8 @@ export type WpContactAcf = {
   workSchedule: string;
   /** ACF «Город подразделения» (unit-city) — как в WP, без эвристик. */
   unitCity: string;
+  /** ACF «Юр. лицо» (yur_lico) — как в WP, без эвристик. */
+  legalEntity: string;
 };
 
 export type WpContactItem = {
@@ -29,6 +31,7 @@ export type WpContactRest = {
   link?: string;
   acf?: {
     "unit-city"?: string;
+    yur_lico?: string;
     unit_phone_number?: string;
     office_address?: string;
     sklad_address?: string;
@@ -197,6 +200,7 @@ function parseAcf(acf: WpContactRest["acf"]): WpContactAcf {
     warehouseAddress,
     workSchedule: !isPlaceholderValue(scheduleRaw) ? scheduleRaw : "",
     unitCity: (acf?.["unit-city"] ?? "").trim(),
+    legalEntity: (acf?.yur_lico ?? "").trim(),
   };
 }
 
