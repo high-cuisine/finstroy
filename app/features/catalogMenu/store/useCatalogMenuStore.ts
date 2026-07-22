@@ -22,7 +22,7 @@ export type CatalogMenuStore = CatalogMenuStoreState & CatalogMenuStoreActions;
 export const useCatalogMenuStore = create<CatalogMenuStore>((set) => ({
   isOpen: false,
   mode: 'catalog',
-  history: ['Столешницы', 'Авиационная фанера', 'ДСП'],
+  history: [],
 
   open: (mode = 'catalog') => set({ isOpen: true, mode }),
   close: () => set({ isOpen: false, mode: 'catalog' }),
