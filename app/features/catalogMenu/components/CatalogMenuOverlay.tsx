@@ -225,39 +225,43 @@ export function CatalogMenuOverlay() {
               </>
             ) : mode === "search" && !hasQuery ? (
               <>
-                <div className={styles.header}>
-                  <div className={styles.headerRow}>
-                    <div className={styles.title}>История</div>
-                    <button type="button" className={styles.clearBtn} onClick={clearHistory}>
-                      Очистить
-                    </button>
-                  </div>
-                </div>
+                {history.length > 0 && (
+                  <>
+                    <div className={styles.header}>
+                      <div className={styles.headerRow}>
+                        <div className={styles.title}>История</div>
+                        <button type="button" className={styles.clearBtn} onClick={clearHistory}>
+                          Очистить
+                        </button>
+                      </div>
+                    </div>
 
-                <div className={styles.section}>
-                  <div className={styles.searchList} aria-label="История поиска">
-                    {(history.length ? history : popular).slice(0, 3).map((q, idx) => (
-                      <button
-                        key={`${q}-${idx}`}
-                        type="button"
-                        className={`${styles.searchRow}${idx === 0 ? ` ${styles.searchRowActive}` : ""}`}
-                        onClick={() => {
-                          setQuery(q);
-                          addToHistory(q);
-                        }}
-                      >
-                        <Image
-                          src="/icons/history.svg"
-                          alt=""
-                          width={22}
-                          height={22}
-                          className={styles.rowIcon}
-                        />
-                        <span className={styles.rowText}>{q}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
+                    <div className={styles.section}>
+                      <div className={styles.searchList} aria-label="История поиска">
+                        {history.slice(0, 3).map((q, idx) => (
+                          <button
+                            key={`${q}-${idx}`}
+                            type="button"
+                            className={`${styles.searchRow}${idx === 0 ? ` ${styles.searchRowActive}` : ""}`}
+                            onClick={() => {
+                              setQuery(q);
+                              addToHistory(q);
+                            }}
+                          >
+                            <Image
+                              src="/icons/history.svg"
+                              alt=""
+                              width={22}
+                              height={22}
+                              className={styles.rowIcon}
+                            />
+                            <span className={styles.rowText}>{q}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </>
+                )}
 
                 <div className={styles.section}>
                   <div className={styles.sectionTitle}>Популярные запросы</div>
