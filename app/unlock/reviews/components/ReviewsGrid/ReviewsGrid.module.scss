@@ -1,0 +1,82 @@
+// ── Reviews Grid ──────────────────────────────────────────────────────────────
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px 20px;
+}
+
+.cardWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  font: inherit;
+  width: 100%;
+}
+
+.cardWrap:hover .reviewImage {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.cardWrap:focus-visible {
+  outline: 2px solid #006f3d;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.reviewImage {
+  width: 100%;
+  aspect-ratio: 0.71 / 1;
+  object-fit: cover;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.cardCompany {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--color-grey);
+  text-align: center;
+  transition: color 0.2s;
+}
+
+.statusText {
+  grid-column: 1 / -1;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  color: var(--color-grey);
+}
+
+// ── Responsive ────────────────────────────────────────────────────────────────
+
+@media (max-width: 1200px) {
+  .grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px 12px;
+  }
+}
+
+@media (max-width: 420px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px 8px;
+  }
+}

@@ -6,6 +6,7 @@ services:
       args:
         WP_PAGES_UPSTREAM: ${WP_PAGES_UPSTREAM:-https://wp.finstroi.com}
         CUBIC_CALCULATOR_UPSTREAM: ${CUBIC_CALCULATOR_UPSTREAM:-https://wp.finstroi.com/wp-json/cubic-calculator/v1}
+        ISR_REVALIDATE_SECONDS: ${ISR_REVALIDATE_SECONDS:-180}
     container_name: new
     ports:
       - "3338:3000"

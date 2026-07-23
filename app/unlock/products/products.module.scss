@@ -1,0 +1,1060 @@
+// ── Page ─────────────────────────────────────────────────────────────────────
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main {
+  flex: 1;
+  background: var(--cat-bg);
+  transition: background 0.2s;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  padding: 32px;
+  gap: 0;
+}
+
+.containerSingle .content {
+  padding-left: 32px;
+}
+
+// ── Sidebar ───────────────────────────────────────────────────────────────────
+
+.sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  padding: 4px 0 24px;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 24px;
+  align-self: flex-start;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+}
+
+.sidebarHead {
+  padding: 0 20px 20px;
+}
+
+.sidebarTitle {
+  display: block;
+  margin: 0 0 8px;
+  padding: 0;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-geologica), var(--font-inter), sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  color: var(--cat-text);
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: var(--cat-accent, #4caf50);
+  }
+}
+
+.sidebarLabel {
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--cat-text-sub);
+  font-family: var(--font-inter), sans-serif;
+}
+
+.sidebarNav {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebarLoading {
+  display: block;
+  padding: 12px 20px;
+  font-size: 14px;
+  color: var(--cat-placeholder);
+  font-family: var(--font-inter), sans-serif;
+}
+
+.catItem {
+  display: block;
+  width: 100%;
+  padding: 14px 20px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.35;
+  color: var(--cat-cat-text);
+  cursor: pointer;
+  border: none;
+  background: none;
+  text-align: left;
+  font-family: var(--font-inter), sans-serif;
+  transition: color 0.15s, background 0.15s;
+  border-radius: 0;
+
+  &:hover {
+    color: var(--cat-text);
+    background: rgba(128, 128, 128, 0.06);
+  }
+}
+
+.catItemSelected {
+  background: #006f3d;
+  color: #ffffff !important;
+
+  &:hover {
+    color: #ffffff !important;
+    background: #006f3d;
+  }
+}
+
+// ── Content ───────────────────────────────────────────────────────────────────
+
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 0 8px 32px;
+}
+
+.productCard {
+  background: var(--cat-elevated);
+  border-radius: 24px;
+  padding: 32px;
+  margin-bottom: 48px;
+  transition: background 0.2s;
+}
+
+.productCardPlain {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  margin-bottom: 40px;
+}
+
+.productTitle {
+  margin-bottom: 32px;
+}
+
+.productName {
+  font-size: 32px;
+  font-weight: 500;
+  color: var(--cat-text);
+  font-family: var(--font-geologica), var(--font-inter), sans-serif;
+  margin-bottom: 8px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.productSubtitle {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--cat-text-sub);
+  font-family: var(--font-inter), sans-serif;
+  line-height: 1.4;
+}
+
+// ── Product section ───────────────────────────────────────────────────────────
+
+.productSection {
+  display: flex;
+  gap: 48px;
+  align-items: flex-start;
+}
+
+.productSectionPlain {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 320px);
+  gap: 32px;
+  align-items: start;
+}
+
+// ── Images column (gallery component inside) ──────────────────────────────────
+
+.imagesColumn {
+  flex: 0 0 48%;
+  max-width: 560px;
+  min-width: 0;
+}
+
+.imagesColumnPlain {
+  flex: none;
+  max-width: none;
+  width: 100%;
+}
+
+.productSummary {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.productSummaryPrice {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--cat-text);
+  font-family: var(--font-geologica), var(--font-inter), sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.productSummaryMeta {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--cat-text-sub);
+  font-family: var(--font-inter), sans-serif;
+}
+
+// ── Calculator ────────────────────────────────────────────────────────────────
+
+.calcColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.fieldLabel {
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--cat-text);
+  margin-bottom: 6px;
+  font-family: var(--font-inter), sans-serif;
+}
+
+.fieldLabelGrey {
+  color: var(--cat-text-sub);
+}
+
+.selectWrap {
+  position: relative;
+}
+
+.select {
+  width: 100%;
+  padding: 12px 40px 12px 16px;
+  background: var(--cat-input-bg);
+  border: 1px solid var(--cat-border);
+  border-radius: 12px;
+  font-size: 14px;
+  font-family: var(--font-inter), sans-serif;
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s, background 0.2s, color 0.2s;
+
+  &:focus {
+    border-color: #006f3d;
+  }
+
+  option {
+    background: var(--cat-elevated);
+    color: var(--cat-text);
+  }
+}
+
+.selectPlaceholder {
+  color: var(--cat-placeholder);
+}
+
+.selectFilled {
+  color: var(--cat-text);
+}
+
+.selectArrow {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+  color: var(--cat-placeholder);
+}
+
+.inputsRow {
+  display: flex;
+  gap: 12px;
+}
+
+.inputGroup {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.input {
+  padding: 12px 16px;
+  background: var(--cat-input-bg);
+  border: 1px solid var(--cat-border);
+  border-radius: 12px;
+  color: var(--cat-placeholder);
+  font-size: 14px;
+  font-family: var(--font-inter), sans-serif;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.15s, background 0.2s, color 0.2s;
+
+  &:focus {
+    border-color: #006f3d;
+    color: var(--cat-text);
+  }
+}
+
+.inputEditable {
+  color: var(--cat-text);
+}
+
+// ── Checkbox ──────────────────────────────────────────────────────────────────
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkboxInput {
+  display: none;
+}
+
+.checkboxBox {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  background: #006f3d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.checkboxBoxOff {
+  background: transparent;
+  border: 1px solid var(--cat-border);
+}
+
+.checkboxLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--cat-text);
+  font-family: var(--font-inter), sans-serif;
+}
+
+// ── Info + Total ──────────────────────────────────────────────────────────────
+
+.infoRow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.infoText {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--cat-text);
+  font-family: var(--font-inter), sans-serif;
+}
+
+.totalRow {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.totalText {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--cat-text);
+  font-family: var(--font-inter), sans-serif;
+  white-space: nowrap;
+}
+
+.orderActions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.orderHint {
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--color-grey, #8d96a9);
+  max-width: 320px;
+}
+
+.orderError {
+  font-size: 13px;
+  line-height: 1.35;
+  color: #b91c1c;
+  max-width: 360px;
+}
+
+// ── Characteristics ───────────────────────────────────────────────────────────
+
+.characteristics {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-bottom: 48px;
+}
+
+.charTitle {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--cat-text);
+  font-family: var(--font-inter), sans-serif;
+}
+
+.charText {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--cat-text);
+  line-height: 1.65;
+  font-family: var(--font-inter), sans-serif;
+}
+
+.charDescription {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--cat-text);
+  line-height: 1.65;
+  font-family: var(--font-inter), sans-serif;
+
+  :global(p),
+  :global(div) {
+    margin-bottom: 12px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  :global(p + table),
+  :global(p + .wp-block-table),
+  :global(p + figure),
+  :global(h2 + table),
+  :global(h3 + table),
+  :global(h4 + table),
+  :global(h2 + .wp-block-table),
+  :global(h3 + .wp-block-table),
+  :global(h4 + .wp-block-table),
+  :global(h2 + figure),
+  :global(h3 + figure),
+  :global(h4 + figure) {
+    margin-top: 24px;
+  }
+
+  :global(table + p),
+  :global(table + h2),
+  :global(table + h3),
+  :global(table + h4),
+  :global(.wp-block-table + p),
+  :global(.wp-block-table + h2),
+  :global(.wp-block-table + h3),
+  :global(.wp-block-table + h4),
+  :global(figure + p),
+  :global(figure + h2),
+  :global(figure + h3),
+  :global(figure + h4) {
+    margin-top: 24px;
+  }
+
+  :global(img) {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin: 16px 0;
+  }
+
+  :global(a) {
+    color: #006f3d;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+
+  :global(.wp-block-table),
+  :global(figure:has(> table)) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 12px;
+    border: 1px solid var(--cat-border);
+    margin: 32px 0;
+    max-width: 100%;
+  }
+
+  :global(.wp-block-table:has(table:not(:has(thead)))),
+  :global(figure:has(> table:not(:has(thead)))) {
+    overflow: hidden;
+    padding: 0;
+  }
+
+  :global(.wp-block-table:has(table:not(:has(thead)))) :global(table),
+  :global(figure:has(> table:not(:has(thead)))) :global(table) {
+    border: none !important;
+    border-radius: 0;
+    margin: 0;
+  }
+
+  :global(.wp-block-table) :global(table),
+  :global(figure:has(> table)) :global(table) {
+    margin: 0;
+  }
+
+  :global(table) {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0;
+    border: none !important;
+    font-size: 13px;
+    font-family: var(--font-inter), sans-serif;
+    color: var(--cat-text);
+  }
+
+  :global(th),
+  :global(td) {
+    padding: 12px 16px;
+    border: 1px solid var(--cat-border) !important;
+    color: var(--cat-text);
+    vertical-align: middle;
+    line-height: 1.45;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+  }
+
+  :global(table:not(:has(thead))) {
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--cat-border) !important;
+    margin: 32px 0;
+
+    :global(th),
+    :global(td) {
+      white-space: normal;
+      padding: 18px 20px;
+      vertical-align: middle;
+      font-weight: 400;
+      background: var(--cat-tbl-body) !important;
+      border: none !important;
+      border-bottom: 1px solid var(--cat-border) !important;
+      border-right: 1px solid var(--cat-border) !important;
+    }
+
+    :global(tr > :first-child) {
+      width: 34%;
+      max-width: 300px;
+      text-align: right;
+      font-weight: 500;
+    }
+
+    :global(tr > :last-child) {
+      text-align: left;
+      border-right: none !important;
+    }
+
+    :global(tr:first-child > th),
+    :global(tr:first-child > td) {
+      background: var(--cat-tbl-head) !important;
+      font-weight: 600;
+    }
+
+    :global(tr:last-child > th),
+    :global(tr:last-child > td) {
+      border-bottom: none !important;
+    }
+  }
+
+  :global(table:has(thead)) {
+    min-width: 640px;
+    margin: 32px 0;
+
+    :global(th),
+    :global(td) {
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    :global(thead th) {
+      background: var(--cat-tbl-head) !important;
+      font-weight: 600;
+      white-space: normal;
+      line-height: 1.35;
+      padding: 10px 12px;
+    }
+
+    :global(thead tr:first-child th) {
+      padding: 12px 14px;
+      font-size: 13px;
+    }
+
+    :global(thead tr:last-child th) {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--cat-text-sub);
+    }
+
+    :global(tbody td) {
+      background: var(--cat-tbl-body) !important;
+      font-weight: 400;
+      padding: 10px 14px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    :global(tbody tr:nth-child(even) td) {
+      background: var(--cat-elevated) !important;
+    }
+
+    :global(tbody td:nth-child(1)),
+    :global(tbody td:nth-child(2)) {
+      width: 56px;
+      min-width: 56px;
+      font-weight: 500;
+    }
+
+    :global(thead th[rowspan]) {
+      min-width: 88px;
+      max-width: 120px;
+    }
+
+    :global(thead tr:first-child th:first-child) {
+      border-radius: 11px 0 0 0;
+    }
+
+    :global(thead tr:first-child th:last-child) {
+      border-radius: 0 11px 0 0;
+    }
+
+    :global(tbody tr:last-child td:first-child) {
+      border-radius: 0 0 0 11px;
+    }
+
+    :global(tbody tr:last-child td:last-child) {
+      border-radius: 0 0 11px 0;
+    }
+  }
+}
+
+.charParagraphs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+// ── Tables ────────────────────────────────────────────────────────────────────
+
+@mixin productTableBase {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 13px;
+  font-family: var(--font-inter), sans-serif;
+  color: var(--cat-text);
+}
+
+@mixin productTableCell {
+  padding: 12px 16px;
+  text-align: center;
+  border: 1px solid var(--cat-border) !important;
+  color: var(--cat-text);
+  vertical-align: middle;
+  line-height: 1.45;
+  white-space: nowrap;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+@mixin productTableHeadCell {
+  @include productTableCell;
+  background: var(--cat-tbl-head) !important;
+  font-weight: 600;
+}
+
+@mixin productTableBodyCell {
+  @include productTableCell;
+  background: var(--cat-tbl-body) !important;
+  font-weight: 400;
+}
+
+@mixin productTableCorners {
+  thead tr:first-child th:first-child {
+    border-radius: 11px 0 0 0;
+  }
+
+  thead tr:first-child th:last-child {
+    border-radius: 0 11px 0 0;
+  }
+
+  tbody tr:last-child td:first-child {
+    border-radius: 0 0 0 11px;
+  }
+
+  tbody tr:last-child td:last-child {
+    border-radius: 0 0 11px 0;
+  }
+}
+
+.tableWrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 12px;
+  border: 1px solid var(--cat-border);
+}
+
+.table {
+  @include productTableBase;
+  min-width: 680px;
+
+  th,
+  td {
+    @include productTableCell;
+  }
+
+  thead th {
+    @include productTableHeadCell;
+    white-space: normal;
+    line-height: 1.35;
+    padding: 10px 12px;
+  }
+
+  thead tr:first-child th {
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+
+  thead tr:last-child th {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--cat-text-sub);
+  }
+
+  tbody td {
+    @include productTableBodyCell;
+    padding: 10px 14px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  tbody td:nth-child(1),
+  tbody td:nth-child(2) {
+    width: 56px;
+    min-width: 56px;
+    font-weight: 500;
+  }
+
+  thead th[rowspan] {
+    min-width: 88px;
+    max-width: 120px;
+  }
+
+  tbody tr:nth-child(even) td {
+    background: var(--cat-elevated) !important;
+  }
+
+  @include productTableCorners;
+}
+
+.formalSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.formalText {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--cat-text);
+  font-family: var(--font-inter), sans-serif;
+}
+
+.formalTable {
+  @include productTableBase;
+  table-layout: fixed;
+
+  th,
+  td {
+    @include productTableCell;
+    padding: 14px 20px;
+    white-space: normal;
+  }
+
+  thead th {
+    @include productTableHeadCell;
+    text-align: center;
+  }
+
+  tbody td {
+    @include productTableBodyCell;
+  }
+
+  thead th:first-child,
+  tbody td:first-child {
+    width: 28%;
+    max-width: 220px;
+    text-align: center;
+    font-weight: 500;
+  }
+
+  thead th:nth-child(2),
+  tbody td:nth-child(2) {
+    text-align: left;
+  }
+
+  tbody tr:nth-child(even) td {
+    background: var(--cat-elevated) !important;
+  }
+
+  @include productTableCorners;
+}
+
+.footerText {
+  font-size: 14px;
+  color: var(--cat-text-sub);
+  line-height: 1.65;
+  font-family: var(--font-inter), sans-serif;
+}
+
+// ── Responsive ────────────────────────────────────────────────────────────────
+
+// Tablet ≤1280px: reduce sidebar width
+@media (max-width: 1280px) {
+  .sidebar {
+    width: 220px;
+  }
+}
+
+// Tablet ≤1100px: calculator moves below images
+@media (max-width: 1100px) {
+  .productCard {
+    padding: 24px;
+    border-radius: 20px;
+  }
+
+  .productCardPlain {
+    padding: 0;
+    border-radius: 0;
+  }
+
+  .productSection {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .productSectionPlain {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .imagesColumn {
+    flex: none;
+    max-width: none;
+    width: 100%;
+  }
+}
+
+// ── Mobile catalog drawer ─────────────────────────────────────────────────────
+
+.mobileCatBtn {
+  display: none;
+}
+
+.catModalBackdrop {
+  display: none;
+}
+
+// Mobile ≤768px: sidebar hidden, full-width single-column layout
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    padding: 0;
+    gap: 0;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .content {
+    padding: 24px 16px;
+  }
+
+  .productCard {
+    padding: 20px 16px;
+    border-radius: 16px;
+    margin-bottom: 32px;
+  }
+
+  .productCardPlain {
+    padding: 0;
+    border-radius: 0;
+    margin-bottom: 24px;
+  }
+
+  .productTitle {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .productTitleText {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .mobileCatBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--cat-border);
+    border-radius: 12px;
+    background: var(--cat-input-bg);
+    color: var(--cat-text);
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+
+    &:hover {
+      background: rgba(128, 128, 128, 0.08);
+    }
+  }
+
+  .catModalBackdrop {
+    display: flex;
+    align-items: flex-end;
+    position: fixed;
+    inset: 0;
+    z-index: 600;
+    background: rgba(0, 0, 0, 0.45);
+  }
+
+  .catModalPanel {
+    width: 100%;
+    background: var(--bg-page);
+    border-radius: 20px 20px 0 0;
+    padding: 20px 20px calc(20px + env(safe-area-inset-bottom, 0px));
+    max-height: 75vh;
+    overflow-y: auto;
+    transition: background 0.2s;
+  }
+
+  .catModalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .catModalTitle {
+    font-size: 20px;
+    font-weight: 600;
+    font-family: var(--font-geologica), sans-serif;
+    letter-spacing: -0.03em;
+    color: var(--cat-text);
+    transition: color 0.2s;
+  }
+
+  .catModalClose {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--cat-text);
+    cursor: pointer;
+    transition: background 0.15s;
+
+    &:hover {
+      background: rgba(128, 128, 128, 0.1);
+    }
+  }
+
+  .charTitle {
+    font-size: 18px;
+  }
+
+  .productName {
+    font-size: 24px;
+  }
+
+  .totalText {
+    font-size: 18px;
+  }
+}
+
+// Small mobile ≤480px: stack paired inputs, stretch CTA button
+@media (max-width: 480px) {
+  .content {
+    padding: 16px;
+  }
+
+  .inputsRow {
+    flex-direction: column;
+  }
+
+  .totalRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  // Full-width "Добавить в заказ" button
+  .totalRow .orderActions button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .formalTable th,
+  .formalTable td {
+    padding: 10px 16px;
+  }
+
+  .charDescription :global(table:not(:has(thead)) tr > :first-child) {
+    width: 42%;
+    max-width: none;
+  }
+
+  .charDescription :global(table:not(:has(thead)) th),
+  .charDescription :global(table:not(:has(thead)) td) {
+    padding: 14px 16px;
+    font-size: 12px;
+  }
+
+  .charDescription :global(table:has(thead) th),
+  .charDescription :global(table:has(thead) td) {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .table th,
+  .table td {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+}

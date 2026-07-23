@@ -6,7 +6,7 @@ import { getNewsById } from "@/app/features/wp/api/wpNewsApi";
 import { sitePath } from "@/app/shared/lib/sitePath";
 import styles from "./article.module.scss";
 
-export const revalidate = 180;
+export const revalidate = Number(process.env.ISR_REVALIDATE_SECONDS ?? 180);
 
 function ArrowLeft({ className }: { className?: string }) {
   return (

@@ -1,0 +1,245 @@
+// ── Payment tab ───────────────────────────────────────────────────────────────
+
+.card {
+  background: var(--account-panel, var(--bg-card));
+  border: none;
+  border-radius: 12px;
+  padding: 24px 32px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  transition: background 0.2s;
+}
+
+.cardTitle {
+  font-family: "Geologica", sans-serif;
+  font-size: 24px;
+  line-height: 1.33;
+  letter-spacing: -0.03em;
+  color: var(--color-black);
+  font-weight: 400;
+  transition: color 0.2s;
+}
+
+.paymentCard {
+  gap: 32px;
+}
+
+.paymentMethodsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.payMethodCard,
+.addPaymentMethodBtn {
+  min-height: 120px;
+  border-radius: 12px;
+}
+
+.payMethodCard {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 8px 24px;
+  background: var(--account-nav-hover, var(--bg-surface));
+  color: #4d4d5c;
+  transition: background 0.2s, transform 0.18s, box-shadow 0.18s;
+}
+
+.payMethodCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(17, 17, 20, 0.08);
+}
+
+.bankLogo {
+  position: absolute;
+  left: 50%;
+  top: 48px;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
+  font-family: "Inter", sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  transition: filter 0.18s, transform 0.18s;
+}
+
+.payMethodCard:hover .bankLogo {
+  filter: blur(8px);
+  transform: translate(-50%, -50%) scale(1.03);
+}
+
+.bankLogoSber {
+  color: #21a038;
+}
+
+.sberMark {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 5px solid #21a038;
+  border-left-color: #ffd600;
+  border-bottom-color: #00a3ff;
+  position: relative;
+}
+
+.sberMark::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  width: 15px;
+  height: 8px;
+  border-left: 4px solid #21a038;
+  border-bottom: 4px solid #21a038;
+  transform: rotate(-45deg);
+}
+
+.bankLogoTbank {
+  color: #333333;
+}
+
+.tbankMark {
+  width: 34px;
+  height: 34px;
+  clip-path: polygon(50% 0, 100% 20%, 90% 78%, 50% 100%, 10% 78%, 0 20%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffdd2d;
+  color: #333333;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.bankLogoAlfa {
+  color: #ef3124;
+}
+
+.payMethodLabel {
+  position: relative;
+  z-index: 1;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  line-height: 1.67;
+  color: #4d4d5c;
+  text-align: center;
+  transition: opacity 0.18s, transform 0.18s;
+}
+
+.payMethodCard:hover .payMethodLabel {
+  opacity: 0.65;
+}
+
+.payMethodOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 20px;
+  background: rgba(240, 240, 245, 0.5);
+  opacity: 0;
+  backdrop-filter: blur(12px);
+  transition: opacity 0.18s;
+}
+
+:global([data-theme="dark"]) .payMethodOverlay {
+  background: rgba(36, 36, 41, 0.58);
+}
+
+.payMethodCard:hover .payMethodOverlay {
+  opacity: 1;
+}
+
+.payMethodRemove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 1.43;
+  color: #111114;
+  transform: translateY(6px);
+  transition: transform 0.18s, color 0.15s;
+}
+
+:global([data-theme="dark"]) .payMethodRemove {
+  color: #ffffff;
+}
+
+.payMethodCard:hover .payMethodRemove {
+  transform: translateY(0);
+}
+
+.payMethodRemove:hover {
+  color: #d32f2f;
+}
+
+.addPaymentMethodBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 24px;
+  border: 1px solid #dcdce0;
+  background: var(--account-panel, #ffffff);
+  color: var(--color-black);
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.43;
+  transition: border-color 0.18s, transform 0.18s, box-shadow 0.18s, color 0.18s;
+}
+
+.addPaymentMethodBtn svg {
+  width: 32px;
+  height: 32px;
+  color: var(--account-accent, var(--color-green));
+  transition: transform 0.18s;
+}
+
+.addPaymentMethodBtn:hover {
+  border-color: var(--account-accent, var(--color-green));
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(17, 17, 20, 0.08);
+}
+
+.addPaymentMethodBtn:hover svg {
+  transform: scale(1.08) rotate(90deg);
+}
+
+// ── Responsive ────────────────────────────────────────────────────────────────
+
+@media (max-width: 768px) {
+  .card {
+    padding: 16px 16px 32px;
+    gap: 20px;
+  }
+
+  .paymentMethodsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .paymentMethodsGrid {
+    grid-template-columns: 1fr;
+  }
+}

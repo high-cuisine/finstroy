@@ -1,0 +1,106 @@
+// ── Page shell ────────────────────────────────────────────────────────────────
+
+.page {
+  --account-page-bg: #f0f0f5;
+  --account-panel: #ffffff;
+  --account-input-bg: #ffffff;
+  --account-input-border: #dcdce0;
+  --account-input-border-focus: #9d9da3;
+  --account-placeholder: #9d9da3;
+  --account-muted: #4d4d5c;
+  --account-accent: #006f3d;
+  --account-on-accent: #ffffff;
+  --account-rule: #e8e8ef;
+  --account-nav-hover: #f0f0f5;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--bg-page);
+  transition: background 0.2s;
+}
+
+/* Figma «Личный кабинет» — u2HRFdeaXaZvthNere9cWd, node 465:10359 (тёмная тема) */
+:global([data-theme="dark"]) .page {
+  --account-page-bg: #242429;
+  --account-panel: #111114;
+  --account-input-bg: #111114;
+  --account-input-border: #36363d;
+  --account-input-border-focus: #484852;
+  --account-placeholder: #484852;
+  --account-muted: #9696a3;
+  --account-accent: #006f3d;
+  --account-on-accent: #ffffff;
+  --account-rule: #242429;
+  --account-nav-hover: #242429;
+}
+
+.main {
+  flex: 1;
+  background: var(--account-page-bg, var(--bg-page));
+  padding: 0;
+  transition: background 0.2s;
+}
+
+// ── Two-column layout (sidebar + content) ─────────────────────────────────────
+
+.layout {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 32px 64px;
+}
+
+// ── Content ───────────────────────────────────────────────────────────────────
+
+.content {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0;
+}
+
+// ── Fallback text ─────────────────────────────────────────────────────────────
+
+.emptyText {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  color: var(--color-grey);
+  padding: 24px 32px;
+}
+
+// ── Responsive ────────────────────────────────────────────────────────────────
+
+@media (min-width: 1440px) {
+  .layout {
+    padding: 8px 48px 64px;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .layout {
+    padding: 8px 32px 64px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .layout {
+    padding: 8px 20px 48px;
+  }
+}
+
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 8px 16px 48px;
+  }
+
+  .content {
+    padding: 0;
+    width: 100%;
+  }
+}

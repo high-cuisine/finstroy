@@ -1,0 +1,142 @@
+// ── Clients Section ───────────────────────────────────────────────────────────
+
+.section {
+  border-radius: 12px;
+  padding: 24px 32px 48px;
+  transition: background 0.2s;
+}
+
+.clientsSection {
+  background: var(--bg-card, #ffffff);
+  border-color: var(--border-color, #e8e8ef);
+}
+
+:global([data-theme="dark"]) .clientsSection {
+  background: #0f1014;
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.clientsTitle {
+  margin: 0;
+  font-family: "Geologica", sans-serif;
+  font-size: 36px;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: var(--color-black);
+  transition: color 0.2s;
+}
+
+:global([data-theme="dark"]) .clientsTitle {
+  color: #fff;
+}
+
+.clientsLead {
+  margin: 10px 0 0;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--color-grey);
+  max-width: 980px;
+  transition: color 0.2s;
+}
+
+.clientsGrid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.clientsStatus {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--color-grey);
+}
+
+.clientCard {
+  min-height: 108px;
+  border-radius: 14px;
+  background: #f0f0f5;
+  border: 1px solid var(--border-color, #e8e8ef);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px 10px;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+:global([data-theme="dark"]) .clientCard {
+  background: #23242c;
+  border-color: rgba(255, 255, 255, 0.04);
+}
+
+.clientCardActive {
+  background: #006f3d;
+}
+
+:global([data-theme="dark"]) .clientCardActive {
+  background: #008a4b;
+}
+
+.clientLabel {
+  font-family: "Geologica", sans-serif;
+  font-size: 30px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: #4d4d5c;
+  transition: color 0.2s;
+}
+
+:global([data-theme="dark"]) .clientLabel {
+  color: #aeb2c0;
+}
+
+.clientCardActive .clientLabel {
+  color: #fff;
+}
+
+// ── Responsive ────────────────────────────────────────────────────────────────
+
+@media (max-width: 1100px) {
+  .clientsGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .clientLabel { font-size: 24px; }
+}
+
+@media (max-width: 860px) {
+  .clientsTitle { font-size: 30px; }
+  .clientsLead { font-size: 13px; }
+  .clientsGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .clientLabel { font-size: 20px; }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 20px 16px 32px;
+    border-radius: 10px;
+  }
+
+  .clientsTitle { font-size: 26px; }
+}
+
+@media (max-width: 480px) {
+  .section { padding: 16px 12px 24px; }
+
+  .clientsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .clientLabel { font-size: 16px; }
+
+  .clientCard {
+    min-height: 88px;
+    padding: 6px 8px;
+  }
+}

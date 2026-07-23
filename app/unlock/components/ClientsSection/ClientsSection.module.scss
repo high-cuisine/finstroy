@@ -1,0 +1,108 @@
+.section {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  background-image: url("/images/hero-left-1dd7f3.png");
+  background-position: center;
+  background-size: cover;
+}
+
+.inner {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(1.5rem, 1rem + 1.5vw, 3rem);
+  padding: clamp(2rem, 1.5rem + 1.5vw, 3rem) clamp(1rem, 0.25rem + 2vw, 2rem);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+.title {
+  font-family: "Geologica", sans-serif;
+  font-size: clamp(1.5rem, 1rem + 1.5vw, 3rem);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+
+  @media (max-width: 960px) {
+    font-size: 24px;
+  }
+}
+
+.subtitle {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: clamp(0.875rem, 0.7rem + 0.5vw, 1.25rem);
+  line-height: 1.4;
+  color: #cff9e6;
+  max-width: 600px;
+}
+
+.logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: clamp(1rem, 0.5rem + 1vw, 2rem) 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.logosImage {
+  width: 100%;
+  max-width: 1376px;
+  height: auto;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 1rem;
+  width: 100%;
+}
+
+.buttonLink {
+  display: inline-flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: opacity 0.15s, background 0.2s;
+}
+
+.buttonLink:hover {
+  opacity: 0.85;
+}
+
+.buttonGreen {
+  background: #006f3d;
+  color: #ffffff;
+}
+
+.buttonGrey {
+  background: var(--bg-ctrl);
+  color: var(--color-black);
+}
+
+:global([data-theme="dark"]) .buttonGrey {
+  background: #2c2c34;
+  color: #ffffff;
+}
+
+.buttons > .buttonLink {
+  flex: 1;
+}

@@ -1,0 +1,235 @@
+// ── Support tab ───────────────────────────────────────────────────────────────
+
+.card {
+  background: var(--account-panel, var(--bg-card));
+  border: none;
+  border-radius: 12px;
+  padding: 24px 32px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  transition: background 0.2s;
+}
+
+.cardTitle {
+  font-family: "Geologica", sans-serif;
+  font-size: 24px;
+  line-height: 1.33;
+  letter-spacing: -0.03em;
+  color: var(--color-black);
+  font-weight: 400;
+  transition: color 0.2s;
+}
+
+.supportCard {
+  gap: 28px;
+}
+
+.supportContacts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+}
+
+.supportContact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  font-family: "Inter", sans-serif;
+}
+
+.supportContactTitle {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.43;
+  color: var(--color-black);
+  transition: color 0.2s;
+}
+
+.supportContactLink {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--account-accent, var(--color-green));
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s, text-underline-offset 0.15s, transform 0.15s;
+
+  &:hover {
+    color: #005c33;
+    text-underline-offset: 5px;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.supportHint {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--account-muted, var(--color-grey));
+  transition: color 0.2s;
+}
+
+// ── FAQ ───────────────────────────────────────────────────────────────────────
+
+.faqBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.faqTitle {
+  margin: 0;
+  font-family: "Geologica", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+  color: var(--color-black);
+  transition: color 0.2s;
+}
+
+.faqList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.faqItem {
+  background: var(--account-nav-hover, var(--bg-surface));
+  border-radius: 12px;
+  color: var(--color-black);
+  overflow: hidden;
+  transform: translateZ(0);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.16s;
+}
+
+.faqItem:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(17, 17, 20, 0.08);
+}
+
+.faqItemOpen {
+  background: var(--account-accent, var(--color-green));
+  color: var(--account-on-accent, #ffffff);
+  box-shadow: 0 12px 28px rgba(0, 111, 61, 0.18);
+}
+
+.faqItemOpen:hover {
+  box-shadow: 0 14px 32px rgba(0, 111, 61, 0.22);
+}
+
+.faqQuestion {
+  width: 100%;
+  min-height: 52px;
+  padding: 14px 16px 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border: none;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.43;
+  transition: background 0.15s;
+}
+
+.faqQuestion:active {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+:global([data-theme="dark"]) .faqQuestion:active {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.faqIcon {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--account-panel, var(--bg-card));
+  color: var(--color-black);
+  font-size: 18px;
+  line-height: 1;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.faqQuestion:hover .faqIcon {
+  transform: scale(1.08);
+}
+
+.faqItemOpen .faqIcon {
+  transform: rotate(180deg);
+}
+
+.faqItemOpen .faqQuestion:hover .faqIcon {
+  transform: rotate(180deg) scale(1.08);
+}
+
+.faqAnswer {
+  margin: 0;
+  padding: 0 24px 24px;
+  max-width: 720px;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.72);
+  animation: faqAnswerIn 180ms ease-out;
+}
+
+@keyframes faqAnswerIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ── Responsive ────────────────────────────────────────────────────────────────
+
+@media (max-width: 768px) {
+  .card {
+    padding: 16px 16px 32px;
+    gap: 20px;
+  }
+
+  .supportContacts {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .faqQuestion {
+    padding-left: 16px;
+  }
+
+  .faqAnswer {
+    padding: 0 16px 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .supportContactLink,
+  .faqItem,
+  .faqQuestion,
+  .faqIcon,
+  .faqAnswer {
+    animation: none;
+    transition: none;
+  }
+}
