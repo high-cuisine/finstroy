@@ -1,9 +1,0 @@
-export { CartIcon } from './CartIcon/CartIcon';
-export { ChevronDown } from './ChevronDown/ChevronDown';
-export { PdfIcon } from './PdfIcon/PdfIcon';
-export { TrashIcon } from './TrashIcon/TrashIcon';
-export { ViewGridIcon } from './ViewGridIcon/ViewGridIcon';
-export { ViewSingleIcon } from './ViewSingleIcon/ViewSingleIcon';
-export { ZoomInIcon } from './ZoomInIcon/ZoomInIcon';
-export { ZoomOutIcon } from './ZoomOutIcon/ZoomOutIcon';
-export { ZoomResetIcon } from './ZoomResetIcon/ZoomResetIcon';

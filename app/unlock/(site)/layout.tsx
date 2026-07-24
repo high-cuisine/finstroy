@@ -1,9 +1,9 @@
-import { AppShell } from "@/app/shared/components/AppShell/AppShell";
+import { UnlockChrome } from "./UnlockChrome";
 
 export default function UnlockSiteLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <AppShell>{children}</AppShell>;
+  return <UnlockChrome>{children}</UnlockChrome>;
 }

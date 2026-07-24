@@ -7,9 +7,10 @@
  *
  * Env: `ISR_REVALIDATE_SECONDS` (секунды). По умолчанию 180 (3 мин).
  *
- * В `page.tsx` нужно inline-выражение — Next.js 16 не принимает импортированную
- * константу в segment config:
- * `export const revalidate = Number(process.env.ISR_REVALIDATE_SECONDS ?? 180);`
+ * В `page.tsx` segment config `revalidate` должен быть числовым литералом —
+ * Next.js 16 не принимает ни импортированную константу, ни вызов функции
+ * (`Number(...)`) в этом поле. Нужно писать буквально:
+ * `export const revalidate = 180;`
  */
 export const DEFAULT_ISR_REVALIDATE_SECONDS = 180;
 

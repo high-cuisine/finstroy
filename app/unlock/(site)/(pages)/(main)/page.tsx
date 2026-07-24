@@ -10,7 +10,7 @@ import Footer from "@/app/shared/componets/layout/Footer/Footer";
 import { loadMainPageData } from "./loadMainPageData";
 import styles from "./page.module.scss";
 
-export const revalidate = Number(process.env.ISR_REVALIDATE_SECONDS ?? 180);
+export const revalidate = 180;
 
 export default async function MainPage() {
   const { acf, mainNewsItems, contacts } = await loadMainPageData();

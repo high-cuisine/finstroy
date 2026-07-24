@@ -1,2 +1,0 @@
-curl -X GET "https://finstroy-wp.razvit.tech/wp-json/wp/v2/feedback" \
-  -H "Accept: application/json"
