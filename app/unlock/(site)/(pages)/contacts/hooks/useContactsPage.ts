@@ -8,11 +8,6 @@ import {
   resolveCompanyName,
   resolveDisplayCityName,
   type WpContactItem,
-  DEFAULT_EMAIL,
-  DEFAULT_HOURS,
-  DEFAULT_PHONE,
-  FALLBACK_OFFICE,
-  FALLBACK_WAREHOUSE,
 } from "@/app/features/wp/api/wpContactsApi";
 
 export function useContactsPage() {
@@ -49,7 +44,7 @@ export function useContactsPage() {
     [items, activeSlug],
   );
 
-  /** Fallback только если ACF пустой (у большинства content.rendered = ""). */
+  /** Разбор content HTML используется только если соответствующий ACF пуст. */
   const parsed = useMemo(
     () => (active ? parseContactLayout(active.contentHtml) : null),
     [active],
@@ -57,22 +52,22 @@ export function useContactsPage() {
 
   const displayPhones = useMemo(() => {
     if (active?.acf.phone) return [active.acf.phone];
-    return parsed && parsed.phones.length > 0 ? parsed.phones : [DEFAULT_PHONE];
+    return parsed?.phones ?? [];
   }, [active, parsed]);
 
   const displayEmails = useMemo(() => {
     if (active?.acf.email) return [active.acf.email];
-    return parsed && parsed.emails.length > 0 ? parsed.emails : [DEFAULT_EMAIL];
+    return parsed?.emails ?? [];
   }, [active, parsed]);
 
   const hoursLine = useMemo(() => {
     if (active?.acf.workSchedule) return active.acf.workSchedule;
-    return parsed?.hoursLine?.trim() || DEFAULT_HOURS;
+    return parsed?.hoursLine?.trim() ?? "";
   }, [active, parsed]);
 
   const officeAddr = useMemo(() => {
     if (active?.acf.officeAddress) return active.acf.officeAddress;
-    return parsed?.officeAddress?.trim() || FALLBACK_OFFICE;
+    return parsed?.officeAddress?.trim() ?? "";
   }, [active, parsed]);
 
   const warehouseAddr = useMemo(() => {
@@ -82,7 +77,7 @@ export function useContactsPage() {
     if (parsed?.warehouseAddress?.trim()) return parsed.warehouseAddress.trim();
     // 3) тот же адрес, что у офиса (часто офис = склад)
     if (active?.acf.officeAddress) return active.acf.officeAddress;
-    return FALLBACK_WAREHOUSE;
+    return "";
   }, [active, parsed]);
 
   const companyName = useMemo(

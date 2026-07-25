@@ -77,7 +77,9 @@ export default function OfficeCardSlider({
           <h3 className={styles.cardTitle}>
             Финстрой <span>{activeCard.cityHeading}</span>
           </h3>
-          <span className={styles.cardCompany}>{activeCard.companyName}</span>
+          {activeCard.companyName && (
+            <span className={styles.cardCompany}>{activeCard.companyName}</span>
+          )}
         </div>
 
         <div className={styles.cardNav}>

@@ -293,14 +293,6 @@ export type OfficeCardViewModel = {
   fields: OfficeCardField[];
 };
 
-const DEFAULT_COMPANY_NAME = "АО «ФИН-Стройматериалы»";
-const DEFAULT_PHONE = "8 (800) 550-02-20";
-const DEFAULT_EMAIL = "info@finstroy.ru";
-const DEFAULT_HOURS = "Пн – Пт с 8:00 до 18:00";
-const FALLBACK_OFFICE = "Адрес офиса уточняйте у менеджеров.";
-const FALLBACK_WAREHOUSE =
-  "Уточняйте адрес склада в карточке города или у менеджеров.";
-
 function phoneToTelHref(phone: string): string {
   const digits = phone.replace(/\D/g, "");
   if (digits.length < 10) return `tel:${phone}`;
@@ -340,15 +332,9 @@ export function resolveDisplayCityName(contact: WpContactItem): string {
   return contact.title;
 }
 
-/** Юр. название: yur_lico → unit-city (если ООО/АО…) → дефолт. */
+/** Юр. название строго из ACF «Юр. лицо» — без подмен и дефолтов. */
 export function resolveCompanyName(contact: WpContactItem): string {
-  const legal = sanitizeLegalEntityDisplay(contact.acf.legalEntity);
-  if (legal && looksLikeLegalEntity(legal)) return legal;
-
-  const unit = sanitizeLegalEntityDisplay(contact.acf.unitCity);
-  if (unit && looksLikeLegalEntity(unit)) return unit;
-
-  return DEFAULT_COMPANY_NAME;
+  return sanitizeLegalEntityDisplay(contact.acf.legalEntity);
 }
 
 /**
@@ -369,31 +355,38 @@ export function buildOfficeCardViewModel(
   companyName?: string,
 ): OfficeCardViewModel {
   const parsed = parseContactLayout(contact.contentHtml);
-  const phone = contact.acf.phone || parsed.phones[0] || DEFAULT_PHONE;
-  const email = contact.acf.email || parsed.emails[0] || DEFAULT_EMAIL;
-  const hours =
-    contact.acf.workSchedule || parsed.hoursLine?.trim() || DEFAULT_HOURS;
+  const phone = contact.acf.phone || parsed.phones[0] || "";
+  const email = contact.acf.email || parsed.emails[0] || "";
+  const hours = contact.acf.workSchedule || parsed.hoursLine?.trim() || "";
   const officeAddress =
-    contact.acf.officeAddress ||
-    parsed.officeAddress?.trim() ||
-    FALLBACK_OFFICE;
+    contact.acf.officeAddress || parsed.officeAddress?.trim() || "";
   // Склад: ACF sklad_address → office split → content → тот же адрес офиса
   const warehouseAddress =
     contact.acf.warehouseAddress ||
     parsed.warehouseAddress?.trim() ||
     (contact.acf.officeAddress ? contact.acf.officeAddress : "");
 
-  const fields: OfficeCardField[] = [{ label: "Офис", value: officeAddress }];
+  const fields: OfficeCardField[] = [];
+
+  if (officeAddress) {
+    fields.push({ label: "Офис", value: officeAddress });
+  }
 
   if (warehouseAddress) {
     fields.push({ label: "Склад", value: warehouseAddress });
   }
 
-  fields.push(
-    { label: "Телефон", value: phone, href: phoneToTelHref(phone) },
-    { label: "График работы", value: hours },
-    { label: "Email", value: email, href: `mailto:${email}` },
-  );
+  if (phone) {
+    fields.push({ label: "Телефон", value: phone, href: phoneToTelHref(phone) });
+  }
+
+  if (hours) {
+    fields.push({ label: "График работы", value: hours });
+  }
+
+  if (email) {
+    fields.push({ label: "Email", value: email, href: `mailto:${email}` });
+  }
 
   return {
     slug: contact.slug,
@@ -420,12 +413,3 @@ export function cityHeadingLine(slug: string, title: string): string {
   };
   return map[slug] ?? title;
 }
-
-export {
-  DEFAULT_COMPANY_NAME,
-  DEFAULT_PHONE,
-  DEFAULT_EMAIL,
-  DEFAULT_HOURS,
-  FALLBACK_OFFICE,
-  FALLBACK_WAREHOUSE,
-};

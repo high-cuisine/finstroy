@@ -54,7 +54,7 @@ export default function ContactsPage() {
                   <br />
                   <span className={styles.titleCity}>{headingCity}</span>
                 </h1>
-                <p className={styles.company}>{companyName}</p>
+                {companyName && <p className={styles.company}>{companyName}</p>}
               </div>
 
               <div className={styles.grid}>

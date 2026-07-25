@@ -34,7 +34,7 @@ export default function LocationBlock({ title, address, coords, label }: Locatio
   return (
     <div className={styles.locationBlock}>
       <h2 className={styles.locationTitle}>{title}</h2>
-      <p className={styles.locationAddress}>{address}</p>
+      {address && <p className={styles.locationAddress}>{address}</p>}
 
       <div className={styles.mapWrap}>
         {coords ? (
