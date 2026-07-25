@@ -312,15 +312,6 @@ export function looksLikeLegalEntity(value: string): boolean {
   );
 }
 
-/** Убирает ИНН/КПП из ACF yur_lico для отображения в UI. */
-export function sanitizeLegalEntityDisplay(value: string): string {
-  let v = value.trim();
-  if (!v) return v;
-  v = v.replace(/\s+\d{10}(?:\s*\/\s*\d{9,12})?\s*$/u, "").trim();
-  v = v.replace(/\s+ИНН\s*[\d/\s]+(?:КПП\s*[\d/\s]+)?\s*$/iu, "").trim();
-  return v;
-}
-
 /**
  * Полное имя города для UI:
  * — ACF «Город подразделения», если это не юрлицо («Москва (тест)»)
@@ -332,9 +323,9 @@ export function resolveDisplayCityName(contact: WpContactItem): string {
   return contact.title;
 }
 
-/** Юр. название строго из ACF «Юр. лицо» — без подмен и дефолтов. */
+/** Юр. название строго из ACF «Юр. лицо» — как есть, без подмен, дефолтов и очистки. */
 export function resolveCompanyName(contact: WpContactItem): string {
-  return sanitizeLegalEntityDisplay(contact.acf.legalEntity);
+  return contact.acf.legalEntity;
 }
 
 /**
